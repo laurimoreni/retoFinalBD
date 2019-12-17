@@ -17,26 +17,29 @@ public class LeerFicheros {
 //		
 //		ArrayList<URL> fuentes = leerFicheroFuentes();
 //		
-//		for (URL fuente: fuentes) {
-//			File fichero = new File(fuente.getFile());
-//		}
-//		File fichero = elegirFichero("xml");
-//		if (fichero != null) {
-//		    try {
-//		        SAXParser saxParser = saxParserFactory.newSAXParser();
-//		        XMLHandler handler = new XMLHandler();
-//		        saxParser.parse(fichero, handler);
-//		        
-//		        ArrayList<Libro> librosXML = handler.librosXML();
-//		        
-//		        for(Libro libro : librosXML)
-//		            System.out.println(libro.toString());
-//		        
-//		        libros.addAll(librosXML);
-//		        
-//		    } catch (ParserConfigurationException | SAXException | IOException e) {
-//		        e.printStackTrace();
-//		    }
+//		if (fuentes.size() > 0) {
+//			for (URL fuente: fuentes) {
+//				File fichero = new File(fuente.getFile());
+//			}
+//		
+//			File fichero = elegirFichero("xml");
+//			if (fichero != null) {
+//			    try {
+//			        SAXParser saxParser = saxParserFactory.newSAXParser();
+//			        XMLHandler handler = new XMLHandler();
+//			        saxParser.parse(fichero, handler);
+//			        
+//			        ArrayList<Libro> librosXML = handler.librosXML();
+//			        
+//			        for(Libro libro : librosXML)
+//			            System.out.println(libro.toString());
+//			        
+//			        libros.addAll(librosXML);
+//			        
+//			    } catch (ParserConfigurationException | SAXException | IOException e) {
+//			        e.printStackTrace();
+//			    }
+//			}
 //		}
 //		return libros;
 //	}
@@ -44,6 +47,11 @@ public class LeerFicheros {
 	public ArrayList<URL> leerFicheroFuentes() {
 		ArrayList<URL> fuentes = new ArrayList<URL>();
 		
+		File origenes = new File("ficheros.txt");
+		
+		if (origenes != null) {
+			
+		}
 		
 		return fuentes; 
 	}
