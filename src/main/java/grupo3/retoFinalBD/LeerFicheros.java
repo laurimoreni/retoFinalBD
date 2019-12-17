@@ -1,27 +1,28 @@
 package grupo3.retoFinalBD;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.xml.sax.SAXException;
-
 public class LeerFicheros {
-//	public ArrayList<Libro> leerFicheroXML(ArrayList<Libro> libros) {		
-//		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
-//		
-//		ArrayList<URL> fuentes = leerFicheroFuentes();
-//		
-//		if (fuentes.size() > 0) {
-//			for (URL fuente: fuentes) {
-//				File fichero = new File(fuente.getFile());
-//			}
-//		
+	public ArrayList<Alojamiento> leerFicheroXML(ArrayList<Alojamiento> libros) {		
+		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+		
+		ArrayList<URL> fuentes = leerFicheroFuentes();
+		ArrayList<Alojamiento> alojamientos = new ArrayList<Alojamiento>();
+		
+		if (fuentes.size() > 0) {
+			for (URL fuente: fuentes) {
+				File fichero = new File(fuente.getFile());
+			}
+		
 //			File fichero = elegirFichero("xml");
 //			if (fichero != null) {
 //			    try {
@@ -40,16 +41,27 @@ public class LeerFicheros {
 //			        e.printStackTrace();
 //			    }
 //			}
-//		}
-//		return libros;
-//	}
+		}
+		return alojamientos;
+	}
 	
 	public ArrayList<URL> leerFicheroFuentes() {
 		ArrayList<URL> fuentes = new ArrayList<URL>();
-		
 		File origenes = new File("ficheros.txt");
+		String linea = null;
 		
 		if (origenes != null) {
+			try {
+				BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(origenes.getPath())));
+				
+				while ((linea= br.readLine()) != null) {
+					fuentes.add(new URL(linea));
+				}
+			} catch (FileNotFoundException fnfEx) {
+				fnfEx.printStackTrace();
+			} catch (IOException ioEx) {
+				ioEx.printStackTrace();
+			}
 			
 		}
 		
