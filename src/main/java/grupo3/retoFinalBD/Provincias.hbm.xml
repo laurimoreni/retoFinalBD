@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 17-dic-2019 9:55:03 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="grupo3.retoFinalBD.Provincias" table="provincias">
+        <id name="id" type="int" access="field">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombre" type="java.lang.String" access="field">
+            <column name="nombre" />
+        </property>
+    </class>
+</hibernate-mapping>
