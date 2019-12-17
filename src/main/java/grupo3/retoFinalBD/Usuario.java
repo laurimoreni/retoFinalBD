@@ -9,6 +9,11 @@ public class Usuario {
 	private String contrasena;
 	private int telefono;
 	
+	
+	public Usuario() {
+		
+	}
+	
 	public Usuario(String dni, String nombre, String apellidos, String contrasena, int telefono) {
 		this.dni = dni;
 		this.nombre = nombre;
@@ -35,5 +40,25 @@ public class Usuario {
 
 	public int getTelefono() {
 		return telefono;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+
+	public void setTelefono(int telefono) {
+		this.telefono = telefono;
 	}
 }
