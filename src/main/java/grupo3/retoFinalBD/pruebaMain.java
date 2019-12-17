@@ -7,15 +7,14 @@ public class pruebaMain {
 	public static void main(String[] args) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
-		// Añadir un nuevo objeto alumno
-		PruebaEntity p = new PruebaEntity();
-		p.setId(1);
-		p.setFirstName("demo");
-		p.setLastName("user");
-		session.save(p);
+		// Añadir un nuevo objeto alojamiento
+		Alojamiento alojamiento = new Alojamiento();
+		alojamiento.setSignatura("aaaaa");
+		alojamiento.setDocumentname("demo");
+		alojamiento.setCapacity(13);
+		session.save(alojamiento);
 		session.getTransaction().commit();
 		HibernateUtil.shutdown();
-
 	}
 
 }

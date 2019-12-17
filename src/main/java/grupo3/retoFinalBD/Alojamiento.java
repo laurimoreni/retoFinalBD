@@ -41,6 +41,82 @@ public class Alojamiento {
 		this.store = store;
 		this.autocaravana = autocaravana;
 	}
+	
+	public Alojamiento() {
+		
+	}
+	
+	public void setSignatura(String signatura) {
+		this.signatura = signatura;
+	}
+
+	public void setDocumentname(String documentname) {
+		this.documentname = documentname;
+	}
+
+	public void setTurismdescription(String turismdescription) {
+		this.turismdescription = turismdescription;
+	}
+
+	public void setLodgingtype(String lodgingtype) {
+		this.lodgingtype = lodgingtype;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setPhone(int phone) {
+		this.phone = phone;
+	}
+
+	public void setTurismemail(String turismemail) {
+		this.turismemail = turismemail;
+	}
+
+	public void setWeb(String web) {
+		this.web = web;
+	}
+
+	public void setMarks(String marks) {
+		this.marks = marks;
+	}
+
+	public void setMunicipality(String municipality) {
+		this.municipality = municipality;
+	}
+
+	public void setProvincia(Provincia provincia) {
+		this.provincia = provincia;
+	}
+
+	public void setLatwgs84(float latwgs84) {
+		this.latwgs84 = latwgs84;
+	}
+
+	public void setLonwgs84(float lonwgs84) {
+		this.lonwgs84 = lonwgs84;
+	}
+
+	public void setPostalcode(int postalcode) {
+		this.postalcode = postalcode;
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+
+	public void setRestaurant(int restaurant) {
+		this.restaurant = restaurant;
+	}
+
+	public void setStore(int store) {
+		this.store = store;
+	}
+
+	public void setAutocaravana(int autocaravana) {
+		this.autocaravana = autocaravana;
+	}
 
 	public String getSignatura() {
 		return signatura;
