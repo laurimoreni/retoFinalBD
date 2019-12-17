@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 17-dic-2019 9:55:03 by Hibernate Tools 3.5.0.Final -->
-<hibernate-mapping>
-    <class name="grupo3.retoFinalBD.Provincias" table="provincias">
+<hibernate-mapping package="grupo3.retoFinalBD">
+    <class name="Provincia" table="provincias">
         <id name="id" type="int" access="field">
             <column name="id" />
             <generator class="assigned" />

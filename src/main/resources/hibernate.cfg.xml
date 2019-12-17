@@ -4,12 +4,17 @@
 		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
+    	<!--  connection data -->
     	<property name="hbm2ddl.auto">create</property>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.password"></property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost/prueba?serverTimezone=UTC</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <mapping class="grupo3.retoFinalBD.PruebaEntity"></mapping>
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.password">123</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/prueba?serverTimezone=UTC</property>
+        <property name="hibernate.connection.username">ldmj</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <!--  mapping data -->
+        <mapping resource="Alojamiento.hbm.xml"/>
+        <mapping resource="Provincia.hbm.xml"/>
+        <mapping resource="Reserva.hbm.xml"/>
+        <mapping resource="Usuario.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

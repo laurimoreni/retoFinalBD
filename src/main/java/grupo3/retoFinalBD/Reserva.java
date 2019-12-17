@@ -40,5 +40,25 @@ public class Reserva {
 	public int getPersonas() {
 		return personas;
 	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public void setAlojamiento(Alojamiento alojamiento) {
+		this.alojamiento = alojamiento;
+	}
+
+	public void setPersonas(int personas) {
+		this.personas = personas;
+	}
 	
 }
