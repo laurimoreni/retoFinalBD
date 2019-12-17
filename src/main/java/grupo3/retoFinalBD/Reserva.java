@@ -2,22 +2,20 @@ package grupo3.retoFinalBD;
 
 import java.sql.Date;
 
-public class Reservas {
+public class Reserva {
 
 	private int id;
-	private String dni;
+	private Usuario usuario;
 	private Date fecha;
-	private String alojamiento;
+	private Alojamiento alojamiento;
 	private int personas;
 	
-	public Reservas() {
-		super();
+	public Reserva() {
 	}
 
-	public Reservas(int id, String dni, Date fecha, String alojamiento, int personas) {
-		super();
+	public Reserva(int id, Usuario usuario, Date fecha, Alojamiento alojamiento, int personas) {
 		this.id = id;
-		this.dni = dni;
+		this.usuario = usuario;
 		this.fecha = fecha;
 		this.alojamiento = alojamiento;
 		this.personas = personas;
@@ -27,15 +25,15 @@ public class Reservas {
 		return id;
 	}
 
-	public String getDni() {
-		return dni;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
 	public Date getFecha() {
 		return fecha;
 	}
 
-	public String getAlojamiento() {
+	public Alojamiento getAlojamiento() {
 		return alojamiento;
 	}
 
