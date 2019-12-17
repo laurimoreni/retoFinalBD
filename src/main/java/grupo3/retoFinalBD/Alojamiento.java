@@ -12,7 +12,7 @@ public class Alojamiento {
 	private String web;
 	private String marks;
 	private String municipality;
-	private String territory;
+	private Provincia provincia;
 	private float latwgs84;
 	private float lonwgs84;
 	private int postalcode;
@@ -21,7 +21,7 @@ public class Alojamiento {
 	private int store;
 	private int autocaravana;
 	
-	public Alojamiento(String signatura, String documentname, String turismdescription, String lodgingtype, String address, int phone, String turismemail, String web, String marks, String municipality, String territory, float latwgs84, float lonwgs84, int postalcode, int capacity, int restaurant, int store, int autocaravana) {
+	public Alojamiento(String signatura, String documentname, String turismdescription, String lodgingtype, String address, int phone, String turismemail, String web, String marks, String municipality, Provincia provincia, float latwgs84, float lonwgs84, int postalcode, int capacity, int restaurant, int store, int autocaravana) {
 		this.signatura = signatura;
 		this.documentname = documentname;
 		this.turismdescription = turismdescription;
@@ -32,7 +32,7 @@ public class Alojamiento {
 		this.web = web;
 		this.marks = marks;
 		this.municipality = municipality;
-		this.territory = territory;
+		this.provincia = provincia;
 		this.latwgs84 = latwgs84;
 		this.lonwgs84 = lonwgs84;
 		this.postalcode = postalcode;
@@ -82,8 +82,8 @@ public class Alojamiento {
 		return municipality;
 	}
 
-	public String getTerritory() {
-		return territory;
+	public Provincia getProvincia() {
+		return provincia;
 	}
 
 	public float getLatwgs84() {

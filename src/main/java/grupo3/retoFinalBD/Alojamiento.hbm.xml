@@ -34,10 +34,7 @@
         <property name="marks" type="java.lang.String" access="field">
             <column name="marks" />
         </property>
-        <many-to-one name="Provincias" class="grupo3.retoFinalBD.Provincias" column="territory"></many-to-one>
-        <property name="territory" type="java.lang.String" access="field">
-            <column name="territory" />
-        </property>
+        <many-to-one name="provincia" class="grupo3.retoFinalBD.Provincia" column="territory"></many-to-one>
         <property name="latwgs84" type="float" access="field">
             <column name="latwgs84" />
         </property>
