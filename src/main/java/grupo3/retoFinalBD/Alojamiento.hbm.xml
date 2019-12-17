@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 17-dic-2019 9:36:49 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="grupo3.retoFinalBD.Alojamiento" table="alojamiento">
+    
+        <id name="signatura" type="java.lang.String" access="field">
+            <column name="signatura" />
+            <generator class="assigned" />
+        </id>
+        
+        <property name="documentname" type="java.lang.String" access="field">
+            <column name="documentname" />
+        </property>
+        <property name="turismdescription" type="java.lang.String" access="field">
+            <column name="turismdescription" />
+        </property>
+        <property name="lodgingtype" type="java.lang.String" access="field">
+            <column name="lodgingtype" />
+        </property>
+        <property name="address" type="java.lang.String" access="field">
+            <column name="address" />
+        </property>
+        <property name="phone" type="int" access="field">
+            <column name="phone" />
+        </property>
+        <property name="turismemail" type="java.lang.String" access="field">
+            <column name="turismemail" />
+        </property>
+        <property name="web" type="java.lang.String" access="field">
+            <column name="web" />
+        </property>
+        <property name="marks" type="java.lang.String" access="field">
+            <column name="marks" />
+        </property>
+        <property name="municipality" type="java.lang.String" access="field">
+            <column name="municipality" />
+        </property>
+        <property name="territory" type="java.lang.String" access="field">
+            <column name="territory" />
+        </property>
+        <property name="latwgs84" type="float" access="field">
+            <column name="latwgs84" />
+        </property>
+        <property name="lonwgs84" type="float" access="field">
+            <column name="lonwgs84" />
+        </property>
+        <property name="postalcode" type="int" access="field">
+            <column name="postalcode" />
+        </property>
+        <property name="capacity" type="int" access="field">
+            <column name="capacity" />
+        </property>
+        <property name="restaurant" type="int" access="field">
+            <column name="restaurant" />
+        </property>
+        <property name="store" type="int" access="field">
+            <column name="store" />
+        </property>
+        <property name="autocaravana" type="int" access="field">
+            <column name="autocaravana" />
+        </property>
+        
+    </class>
+</hibernate-mapping>
