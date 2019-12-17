@@ -15,6 +15,7 @@ public class LectorXML {
 
 	public ArrayList<Alojamiento> CargarAlojamientos(String path, ArrayList<Alojamiento> alojamientos){
 		File archivo = new File(path);
+		Formatos formato = new Formatos();
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
@@ -27,6 +28,16 @@ public class LectorXML {
 				if(nodo.getNodeType() == Node.ELEMENT_NODE) {
 					Element elemento = (Element) nodo;
 					Alojamiento alojamiento = new Alojamiento();
+					
+					alojamiento.setSignatura(elemento.getElementsByTagName("signatura").item(0).getTextContent());
+					alojamiento.setDocumentname(elemento.getElementsByTagName("documentname").item(0).getTextContent());
+					alojamiento.setTurismdescription(elemento.getElementsByTagName("turismdescription").item(0).getTextContent());
+					alojamiento.setLodgingtype(elemento.getElementsByTagName("lodgingtype").item(0).getTextContent());
+					alojamiento.setAddress(elemento.getElementsByTagName("address").item(0).getTextContent());
+					alojamiento.setPhone(formato.formatoNumero(elemento.getElementsByTagName("phone").item(0).getTextContent()));
+					alojamiento.setTurismemail(elemento.getElementsByTagName("turismemail").item(0).getTextContent());
+					alojamiento.setWeb(elemento.getElementsByTagName("web").item(0).getTextContent());
+					alojamiento.setMarks(elemento.getElementsByTagName("marks").item(0).getTextContent());
 				}
 			}
 		} catch(Exception e) {
