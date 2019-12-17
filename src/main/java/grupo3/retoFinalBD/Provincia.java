@@ -1,16 +1,14 @@
 package grupo3.retoFinalBD;
 
-public class Provincias {
+public class Provincia {
 
 	private int id;
 	private String nombre;
 
-	public Provincias() {
-		super();
+	public Provincia() {
 	}
 	
-	public Provincias(int id, String nombre) {
-		super();
+	public Provincia(int id, String nombre) {
 		this.id = id;
 		this.nombre = nombre;
 	}
