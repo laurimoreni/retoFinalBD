@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 17-dic-2019 9:56:05 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+ <class name="grupo3.retoFinalBD.Reservas" table="reservas">
+  <id access="field" name="id" type="int">
+   <column name="id"/>
+   <generator class="assigned"/>
+  </id>
+  <many-to-one class="grupo3.retoFinalBD.Usuario" column="dni" name="usuario"/>
+  <property access="field" generated="never" lazy="false" name="fecha" type="java.sql.Date">
+   <column name="fecha"/>
+  </property>
+  <many-to-one class="grupo3.retoFinalBD.Alojamiento" column="signatura" name="alojamiento"/>
+  <property access="field" generated="never" lazy="false"
+   name="personas" type="int">
+   <column name="personas"/>
+  </property>
+ </class>
+</hibernate-mapping>
