@@ -21,10 +21,15 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+
 public class LeerFicheros {
+	/**
+	 * Lee el archivo sacado de cada URL, las cuales estan guardadas en el array fuentes
+	 * @author Elorrieta Errekamari
+	 *
+	 */
 	public ArrayList<Alojamiento> leerFicheroXML(ArrayList<Alojamiento> alojamientos) {		
-		LectorXML miLectorXML = new LectorXML();
-		
+		LectorXML miLectorXML = new LectorXML();	
 		ArrayList<URL> fuentes = leerFicheroFuentes();
 		
 		if (fuentes.size() > 0) {
@@ -40,7 +45,10 @@ public class LeerFicheros {
 		}
 		return alojamientos;
 	}
-	
+	/**
+	 * Crea un array con las URLs necesarias y las guarda en ficheros.txt
+	 * @return
+	 */
 	public ArrayList<URL> leerFicheroFuentes() {
 		ArrayList<URL> fuentes = new ArrayList<URL>();
 		File origenes = new File("ficheros.txt");
