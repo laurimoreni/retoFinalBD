@@ -11,7 +11,13 @@ import java.util.ArrayList;
 
 import javax.xml.parsers.SAXParserFactory;
 
+
 public class LeerFicheros {
+	/**
+	 * Lee el archivo sacado de cada URL, las cuales estan guardadas en el array fuentes
+	 * @author Elorrieta Errekamari
+	 *
+	 */
 	public ArrayList<Alojamiento> leerFicheroXML(ArrayList<Alojamiento> libros) {		
 		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 		
@@ -45,7 +51,10 @@ public class LeerFicheros {
 		}
 		return alojamientos;
 	}
-	
+	/**
+	 * Crea un array con las URLs necesarias y las guarda en ficheros.txt
+	 * @return
+	 */
 	public ArrayList<URL> leerFicheroFuentes() {
 		ArrayList<URL> fuentes = new ArrayList<URL>();
 		File origenes = new File("ficheros.txt");
