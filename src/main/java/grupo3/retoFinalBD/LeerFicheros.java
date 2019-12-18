@@ -1,25 +1,26 @@
 package grupo3.retoFinalBD;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+
+import org.apache.commons.io.FileUtils;
 
 
 public class LeerFicheros {
@@ -39,8 +40,10 @@ public class LeerFicheros {
 				String nombreFichero = datos[5] + ".xml";
 				certificadosHTTPS();
 				descargarFichero(fuente, nombreFichero);
-				File fichero = new File(nombreFichero);
-				alojamientos = miLectorXML.CargarAlojamientos(fichero, alojamientos);
+				if (!ficheroActualizado(nombreFichero)) {
+					File fichero = new File(nombreFichero);
+					alojamientos = miLectorXML.CargarAlojamientos(fichero, alojamientos);
+				}
 			}
 		}
 		return alojamientos;
@@ -81,6 +84,9 @@ public class LeerFicheros {
 		return fuentes; 
 	}
 	
+	/**
+	 * Habilita todos los certificados para poder descargar desde HTTPS 
+	 */
 	public void certificadosHTTPS () {
 		TrustManager[] trustAllCerts = new TrustManager[]{
 		    new X509TrustManager() {
@@ -106,13 +112,36 @@ public class LeerFicheros {
 	}
 	
 	public void descargarFichero (URL fuente, String nombre) {
+		File fichero = null;
 		try {
+			// Comprobar que existe la carpeta temporal
+			Path ruta = Paths.get("Temp");
+			fichero = new File(ruta.toString() + "/" + nombre);
+			if (!Files.exists(ruta)) {	
+				fichero.getParentFile().mkdir();
+			}
 			ReadableByteChannel rbc = Channels.newChannel(fuente.openStream());
-			FileOutputStream fos = new FileOutputStream(nombre);
+			FileOutputStream fos = new FileOutputStream(fichero.getPath());
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean ficheroActualizado(String nombre) {
+		File ficheroViejo = new File(nombre);
+		File ficheroNuevo = new File("Temp/" + nombre);
+		
+		boolean actualizado = false;
+		
+		try {
+			actualizado = FileUtils.contentEquals(ficheroNuevo, ficheroViejo);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		return actualizado;
+		
 	}
 	
 	
