@@ -18,16 +18,17 @@ public class LeerFicheros {
 	 * @author Elorrieta Errekamari
 	 *
 	 */
-	public ArrayList<Alojamiento> leerFicheroXML(ArrayList<Alojamiento> libros) {		
+	public ArrayList<Alojamiento> leerFicheroXML(ArrayList<Alojamiento> aloj) {		
 		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
 		
 		ArrayList<URL> fuentes = leerFicheroFuentes();
 		ArrayList<Alojamiento> alojamientos = new ArrayList<Alojamiento>();
+		LectorXML lectorXML = new LectorXML();
 		
 		if (fuentes.size() > 0) {
 			for (URL fuente: fuentes) {
 				File fichero = new File(fuente.getFile());
-				
+				alojamientos = lectorXML.CargarAlojamientos(fichero, alojamientos);
 			}
 		
 //			File fichero = elegirFichero("xml");

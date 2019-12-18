@@ -1,5 +1,7 @@
 package grupo3.retoFinalBD;
 
+import java.util.ArrayList;
+
 import org.hibernate.Session;
 
 public class pruebaMain {
@@ -8,11 +10,12 @@ public class pruebaMain {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		// Añadir un nuevo objeto alojamiento
-		Alojamiento alojamiento = new Alojamiento();
-		alojamiento.setSignatura("aaaaa");
-		alojamiento.setDocumentname("demo");
-		alojamiento.setCapacity(13);
-		session.save(alojamiento);
+		LeerFicheros leer = new LeerFicheros();
+		ArrayList<Alojamiento> alojamientos = new ArrayList<Alojamiento>();
+		alojamientos = leer.leerFicheroXML(alojamientos);
+		for(Alojamiento alojamiento: alojamientos) {
+			session.save(alojamiento);
+		}
 		session.getTransaction().commit();
 		HibernateUtil.shutdown();
 	}

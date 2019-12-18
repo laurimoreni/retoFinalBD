@@ -13,8 +13,7 @@ import org.w3c.dom.NodeList;
 
 public class LectorXML {
 
-	public ArrayList<Alojamiento> CargarAlojamientos(String path, ArrayList<Alojamiento> alojamientos){
-		File archivo = new File(path);
+	public ArrayList<Alojamiento> CargarAlojamientos(File archivo, ArrayList<Alojamiento> alojamientos){
 		Formatos formato = new Formatos();
 		ArrayList<Provincia> provincias = new ArrayList<Provincia>();
 		int id = 0;
