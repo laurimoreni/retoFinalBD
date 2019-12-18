@@ -12,7 +12,7 @@ public class LecturaBD {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		
-		Query<Alojamiento> query = session.createQuery("from Alojamientos", Alojamiento.class);
+		Query<Alojamiento> query = session.createQuery("from Alojamiento", Alojamiento.class);
 		ArrayList<Alojamiento> alojamientos = (ArrayList<Alojamiento>) query.getResultList();
 		
 		return alojamientos;
