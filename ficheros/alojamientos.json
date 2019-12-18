@@ -2,10 +2,8 @@
   {
     "signatura": "aaaaa",
     "documentname": "demo",
-    "phone": 0,
     "latwgs84": 0.0,
     "lonwgs84": 0.0,
-    "postalcode": 0,
     "capacity": 13,
     "restaurant": 0,
     "store": 0,
@@ -14,10 +12,8 @@
   {
     "signatura": "bbbbb",
     "documentname": "demo",
-    "phone": 0,
     "latwgs84": 0.0,
     "lonwgs84": 0.0,
-    "postalcode": 0,
     "capacity": 13,
     "restaurant": 0,
     "store": 0,

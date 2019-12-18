@@ -40,7 +40,7 @@ public class pruebaMain {
 		// escribir los datos en archivo JSON
 		LectorJSON json = new LectorJSON();
 		json.convertirAJson(aloja);
-		
+
 		// cerrar sesion hibernate
 		HibernateUtil.shutdown();
 	}
