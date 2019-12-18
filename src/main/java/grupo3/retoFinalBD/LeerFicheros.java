@@ -27,6 +27,7 @@ public class LeerFicheros {
 		if (fuentes.size() > 0) {
 			for (URL fuente: fuentes) {
 				File fichero = new File(fuente.getFile());
+				
 			}
 		
 //			File fichero = elegirFichero("xml");

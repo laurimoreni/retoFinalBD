@@ -1,5 +1,8 @@
 package grupo3.retoFinalBD;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Provincia {
 
 	private int id;
