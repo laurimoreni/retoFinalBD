@@ -22,11 +22,11 @@
         <property name="address" type="java.lang.String" access="field">
             <column name="address" />
         </property>
-        <property name="phone" type="int" access="field">
+        <property name="phone" type="java.lang.String" access="field">
             <column name="phone" />
         </property>
-        <property name="turismemail" type="java.lang.String" access="field">
-            <column name="turismemail" />
+        <property name="tourismemail" type="java.lang.String" access="field">
+            <column name="tourismemail" />
         </property>
         <property name="web" type="java.lang.String" access="field">
             <column name="web" />

@@ -9,11 +9,11 @@ public class Formatos {
 	 * @param texto
 	 * @return
 	 */
-	public int formatoNumero(String texto) {
+	public String formatoNumero(String texto) {
 		
 		texto.replace("\\s","");
 		
-		return Integer.parseInt(texto);
+		return texto;
 	}
 	
 	/**

@@ -7,8 +7,8 @@ public class Alojamiento {
 	private String turismdescription;
 	private String lodgingtype;
 	private String address;
-	private int phone;
-	private String turismemail;
+	private String phone;
+	private String tourismemail;
 	private String web;
 	private String marks;
 	private String municipality;
@@ -21,14 +21,14 @@ public class Alojamiento {
 	private int store;
 	private int autocaravana;
 	
-	public Alojamiento(String signatura, String documentname, String turismdescription, String lodgingtype, String address, int phone, String turismemail, String web, String marks, String municipality, Provincia provincia, float latwgs84, float lonwgs84, int postalcode, int capacity, int restaurant, int store, int autocaravana) {
+	public Alojamiento(String signatura, String documentname, String turismdescription, String lodgingtype, String address, String phone, String tourismemail, String web, String marks, String municipality, Provincia provincia, float latwgs84, float lonwgs84, int postalcode, int capacity, int restaurant, int store, int autocaravana) {
 		this.signatura = signatura;
 		this.documentname = documentname;
 		this.turismdescription = turismdescription;
 		this.lodgingtype = lodgingtype;
 		this.address = address;
 		this.phone = phone;
-		this.turismemail = turismemail;
+		this.tourismemail = tourismemail;
 		this.web = web;
 		this.marks = marks;
 		this.municipality = municipality;
@@ -66,12 +66,12 @@ public class Alojamiento {
 		this.address = address;
 	}
 
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
-	public void setTurismemail(String turismemail) {
-		this.turismemail = turismemail;
+	public void setTourismemail(String tourismemail) {
+		this.tourismemail = tourismemail;
 	}
 
 	public void setWeb(String web) {
@@ -138,12 +138,12 @@ public class Alojamiento {
 		return address;
 	}
 
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public String getTurismemail() {
-		return turismemail;
+	public String getTourismemail() {
+		return tourismemail;
 	}
 
 	public String getWeb() {
