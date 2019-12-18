@@ -69,18 +69,16 @@ public class LectorXML {
 						posicion = 13;
 						alojamiento.setLonwgs84(Float.parseFloat(elemento.getElementsByTagName("lonwgs84").item(0).getTextContent()));
 						posicion = 14;
-						alojamiento.setPostalcode(Integer.parseInt(elemento.getElementsByTagName("postalcode").item(0).getTextContent()));
+						alojamiento.setPostalcode(elemento.getElementsByTagName("postalcode").item(0).getTextContent());
 						posicion = 15;
 						alojamiento.setCapacity(Integer.parseInt(elemento.getElementsByTagName("capacity").item(0).getTextContent()));
 						posicion = 16;
 						alojamiento.setRestaurant(Integer.parseInt(elemento.getElementsByTagName("restaurant").item(0).getTextContent()));
-							alojamiento.setRestaurant(0);
 						posicion = 17;
 						alojamiento.setStore(Integer.parseInt(elemento.getElementsByTagName("store").item(0).getTextContent()));
-							alojamiento.setStore(0);
 						posicion = 18;
 						alojamiento.setAutocaravana(Integer.parseInt(elemento.getElementsByTagName("autocaravana").item(0).getTextContent()));
-							alojamiento.setAutocaravana(0);
+							
 					} catch(NullPointerException e) {
 						switch(posicion) {
 							case 2: alojamiento.setDocumentname("Sin nombre");
@@ -88,38 +86,38 @@ public class LectorXML {
 							case 3: alojamiento.setTurismdescription("Sin descripcion");
 								break;
 							case 4: alojamiento.setLodgingtype("Algo rural");
-								
-							case 5:
-								
-							case 6:
-								
-							case 7:
-								
-							case 8:
-								
-							case 9:
-								
-							case 10:
-								
-							case 11:
-								
-							case 12:
-								
-							case 13:
-								
-							case 14:
-								
-							case 15:
-								
-							case 16:
-								
-							case 17:
-								
-							case 18:
+								break;
+							case 5: alojamiento.setAddress("Dirección");
+								break;
+							case 6: alojamiento.setPhone("555863147");
+								break;
+							case 7: alojamiento.setTourismemail("sin_tag@nosevalidarxml.com");
+								break;
+							case 8: alojamiento.setWeb("https:\\Siglo20\no-21.com");
+								break;
+							case 9: alojamiento.setMarks("Montes y Valles vascos");
+								break;
+							case 10: alojamiento.setMunicipality("Amorebieta");
+								break;
+							case 11: alojamiento.setProvincia(provincias.get(0));
+								break;
+							case 12: alojamiento.setLatwgs84(51.3901716f);
+								break;
+							case 13: alojamiento.setLonwgs84(30.1000834f);
+								break;
+							case 14: alojamiento.setPostalcode("48340");
+								break;
+							case 15: alojamiento.setCapacity(13);
+								break;
+							case 16: alojamiento.setRestaurant(0);
+								break;
+							case 17: alojamiento.setStore(0);
+								break;
+							case 18: alojamiento.setAutocaravana(0);
+								break;
 						}
 					}
 					alojamientos.add(alojamiento);
-					System.out.println(i);
 				}
 			}
 		} catch(Exception e) {

@@ -15,13 +15,13 @@ public class Alojamiento {
 	private Provincia provincia;
 	private float latwgs84;
 	private float lonwgs84;
-	private int postalcode;
+	private String postalcode;
 	private int capacity;
 	private int restaurant;
 	private int store;
 	private int autocaravana;
 	
-	public Alojamiento(String signatura, String documentname, String turismdescription, String lodgingtype, String address, String phone, String tourismemail, String web, String marks, String municipality, Provincia provincia, float latwgs84, float lonwgs84, int postalcode, int capacity, int restaurant, int store, int autocaravana) {
+	public Alojamiento(String signatura, String documentname, String turismdescription, String lodgingtype, String address, String phone, String tourismemail, String web, String marks, String municipality, Provincia provincia, float latwgs84, float lonwgs84, String postalcode, int capacity, int restaurant, int store, int autocaravana) {
 		this.signatura = signatura;
 		this.documentname = documentname;
 		this.turismdescription = turismdescription;
@@ -98,7 +98,7 @@ public class Alojamiento {
 		this.lonwgs84 = lonwgs84;
 	}
 
-	public void setPostalcode(int postalcode) {
+	public void setPostalcode(String postalcode) {
 		this.postalcode = postalcode;
 	}
 
@@ -170,7 +170,7 @@ public class Alojamiento {
 		return lonwgs84;
 	}
 
-	public int getPostalcode() {
+	public String getPostalcode() {
 		return postalcode;
 	}
 
