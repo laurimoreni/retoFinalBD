@@ -1,8 +1,13 @@
 package grupo3.retoFinalBD;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 
 public class LectorJSON {
 	/**
@@ -12,10 +17,19 @@ public class LectorJSON {
 	public void convertirAJson(ArrayList<Alojamiento> array) {
 		
 		if(!array.isEmpty()) {
-			for(int i = 0; i < array.size(); i++) {
-				//String json = new Gson().toJson(array.get(i));
-				Gson gson = new Gson();        
-			    System.out.println(gson.toJson(array.get(i)));
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			String ruta = "ficheros" + File.separator + "alojamientos.json";
+			File file = new File(ruta);
+			FileWriter writer = null;
+			file.getParentFile().mkdirs();
+			try {
+				writer = new FileWriter(file);
+				gson.toJson(array, writer);
+				writer.close();
+			} catch (JsonIOException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 	}
