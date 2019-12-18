@@ -40,7 +40,7 @@ public class LeerFicheros {
 				certificadosHTTPS();
 				descargarFichero(fuente, nombreFichero);
 				File fichero = new File(nombreFichero);
-				alojamientos = miLectorXML.CargarAlojamientos(fichero, alojamientos)
+//				alojamientos = miLectorXML.CargarAlojamientos(fichero, alojamientos);
 			}
 		}
 		return alojamientos;
