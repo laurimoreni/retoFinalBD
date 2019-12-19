@@ -1,6 +1,7 @@
 package grupo3.retoFinalBD;
 
 import java.io.File;
+import java.text.Normalizer;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -15,7 +16,6 @@ public class LectorXML {
 
 	public ArrayList<Alojamiento> CargarAlojamientos(File archivo, ArrayList<Alojamiento> alojamientos, LeerFicheros leer){
 		Formatos formato = new Formatos();
-		ArrayList<Provincia> provincias = new ArrayList<Provincia>();
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
@@ -74,21 +74,10 @@ public class LectorXML {
 						alojamiento.setMunicipality("Amorebieta");
 					}
 					try {
-						if(!leer.nombreProvincia.contains(elemento.getElementsByTagName("territory").item(0).getTextContent())) {
-							if(!elemento.getElementsByTagName("territory").item(0).getTextContent().contains(" ")) {
-								provincias = CargarProvincias(elemento.getElementsByTagName("territory").item(0).getTextContent(), provincias, provincias.size() + 1, leer);
-								leer.nombreProvincia.add(elemento.getElementsByTagName("territory").item(0).getTextContent());
-							}
-						} else {
-							for(Provincia p: provincias) {
-								if(p.getNombre().equals(elemento.getElementsByTagName("territory").item(0).getTextContent())) {
-									alojamiento.setProvincia(p);
-									break;
-								}
-							}
-						}
+						String provincia = elemento.getElementsByTagName("territory").item(0).getTextContent();
+						comprobarProvincia(provincia, leer);
 					} catch(NullPointerException e) {
-						alojamiento.setProvincia(provincias.get(0));
+						alojamiento.setProvincia(leer.provincias.get(0));
 					}
 					try {
 						alojamiento.setLatwgs84(Float.parseFloat(elemento.getElementsByTagName("latwgs84").item(0).getTextContent()));
@@ -142,5 +131,21 @@ public class LectorXML {
 		provincias.add(provincia);
 		leer.provincias.add(provincia);
 		return provincias;
+	}
+	
+	public String comprobarProvincia(String provincia, LeerFicheros leer) {
+		
+		provincia = Normalizer.normalize(provincia, Normalizer.Form.NFD);   
+		provincia = (provincia.replaceAll("[^\\p{ASCII}]", "")).toLowerCase();
+		
+		if (provincia.contains("alava") || provincia.contains("araba")) {
+			return leer.provincias.get(1).getNombre();
+		} else if (provincia.contains("vizcaya") || provincia.contains("bizkaia")) {
+			return leer.provincias.get(0).getNombre();
+		} else if (provincia.contains("guipuzcoa") || provincia.contains("gipuzkoa"))  {
+			return leer.provincias.get(2).getNombre();
+		} else {
+			return "";
+		}
 	}
 }
