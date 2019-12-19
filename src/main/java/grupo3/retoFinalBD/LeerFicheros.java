@@ -41,9 +41,11 @@ public class LeerFicheros {
 				certificadosHTTPS();
 				descargarFichero(fuente, nombreFichero);
 				if (!ficheroActualizado(nombreFichero)) {
-					File fichero = new File(nombreFichero);
-					alojamientos = miLectorXML.CargarAlojamientos(fichero, alojamientos);
+					actualizarFichero(nombreFichero);
+					File fichero2 = new File(nombreFichero);
+					alojamientos = miLectorXML.CargarAlojamientos(fichero2, alojamientos);
 				}
+				//borrarFicheroTemporal(nombreFichero);
 			}
 		}
 		return alojamientos;
@@ -131,18 +133,46 @@ public class LeerFicheros {
 	public boolean ficheroActualizado(String nombre) {
 		File ficheroViejo = new File(nombre);
 		File ficheroNuevo = new File("Temp/" + nombre);
-		
+
 		boolean actualizado = false;
 		
-		try {
-			actualizado = FileUtils.contentEquals(ficheroNuevo, ficheroViejo);
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		if (ficheroViejo.isFile() && ficheroNuevo.isFile()) {
+			
+			try {
+				actualizado = FileUtils.contentEquals(ficheroNuevo, ficheroViejo);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 		
 		return actualizado;
 		
 	}
 	
+	public void actualizarFichero(String nombre) {
+		File ficheroViejo = FileUtils.getFile(nombre);
+		File ficheroNuevo = FileUtils.getFile("Temp/" + nombre);
+		
+		if (ficheroViejo.isFile()) {
+			ficheroViejo.delete();
+		}
+		
+		if (ficheroNuevo.isFile()) {
+			try {
+				FileUtils.copyFile(ficheroNuevo, ficheroViejo);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
+	
+	public void borrarFicheroTemporal(String nombre) {
+		File fichero = FileUtils.getFile("Temp/" + nombre);
+		
+		FileUtils.deleteQuietly(fichero);
+
+	}
 	
 }
