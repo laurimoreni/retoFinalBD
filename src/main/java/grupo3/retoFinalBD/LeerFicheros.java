@@ -49,10 +49,10 @@ public class LeerFicheros {
 					//File fichero = new File(nombreFichero);
 					//alojamientos = miLectorXML.CargarAlojamientos(fichero, alojamientos);
 					actualizarFichero(nombreFichero);
-					File fichero2 = new File(nombreFichero);
-					alojamientos = miLectorXML.CargarAlojamientos(fichero2, alojamientos, this);
+					File ficheroXML = new File(nombreFichero);
+					alojamientos = miLectorXML.CargarAlojamientos(ficheroXML, alojamientos, this);
+
 				}
-				//borrarFicheroTemporal(nombreFichero);
 			}
 		}
 		return alojamientos;
@@ -135,6 +135,8 @@ public class LeerFicheros {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+		fichero = null;
 	}
 	
 	public boolean ficheroActualizado(String nombre) {
@@ -173,13 +175,6 @@ public class LeerFicheros {
 		}
 		
 		
-	}
-	
-	public void borrarFicheroTemporal(String nombre) {
-		File fichero = FileUtils.getFile("Temp/" + nombre);
-		
-		FileUtils.deleteQuietly(fichero);
-
 	}
 	
 }
