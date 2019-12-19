@@ -42,10 +42,9 @@ public class LeerFicheros {
 				descargarFichero(fuente, nombreFichero);
 				if (!ficheroActualizado(nombreFichero)) {
 					actualizarFichero(nombreFichero);
-					File fichero2 = new File(nombreFichero);
-					alojamientos = miLectorXML.CargarAlojamientos(fichero2, alojamientos);
+					File ficheroXML = new File(nombreFichero);
+					alojamientos = miLectorXML.CargarAlojamientos(ficheroXML, alojamientos);
 				}
-				//borrarFicheroTemporal(nombreFichero);
 			}
 		}
 		return alojamientos;
@@ -128,6 +127,8 @@ public class LeerFicheros {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+		fichero = null;
 	}
 	
 	public boolean ficheroActualizado(String nombre) {
@@ -166,13 +167,6 @@ public class LeerFicheros {
 		}
 		
 		
-	}
-	
-	public void borrarFicheroTemporal(String nombre) {
-		File fichero = FileUtils.getFile("Temp/" + nombre);
-		
-		FileUtils.deleteQuietly(fichero);
-
 	}
 	
 }
