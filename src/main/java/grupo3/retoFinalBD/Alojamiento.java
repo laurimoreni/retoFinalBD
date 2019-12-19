@@ -2,7 +2,7 @@ package grupo3.retoFinalBD;
 
 public class Alojamiento {
 
-	private String signatura;
+	private int signatura;
 	private String documentname;
 	private String turismdescription;
 	private String lodgingtype;
@@ -21,7 +21,7 @@ public class Alojamiento {
 	private int store;
 	private int autocaravana;
 	
-	public Alojamiento(String signatura, String documentname, String turismdescription, String lodgingtype, String address, String phone, String tourismemail, String web, String marks, String municipality, Provincia provincia, float latwgs84, float lonwgs84, String postalcode, int capacity, int restaurant, int store, int autocaravana) {
+	public Alojamiento(int signatura, String documentname, String turismdescription, String lodgingtype, String address, String phone, String tourismemail, String web, String marks, String municipality, Provincia provincia, float latwgs84, float lonwgs84, String postalcode, int capacity, int restaurant, int store, int autocaravana) {
 		this.signatura = signatura;
 		this.documentname = documentname;
 		this.turismdescription = turismdescription;
@@ -46,7 +46,7 @@ public class Alojamiento {
 		
 	}
 	
-	public void setSignatura(String signatura) {
+	public void setSignatura(int signatura) {
 		this.signatura = signatura;
 	}
 
@@ -118,7 +118,7 @@ public class Alojamiento {
 		this.autocaravana = autocaravana;
 	}
 
-	public String getSignatura() {
+	public int getSignatura() {
 		return signatura;
 	}
 
