@@ -7,24 +7,24 @@ import org.hibernate.Session;
 public class pruebaMain {
 
 	public static void main(String[] args) {
-		LeerFicheros leerFicheros = new LeerFicheros();
-		ArrayList<Alojamiento> alojamientos = new ArrayList<Alojamiento>();
+		
+		// iniciar sesion hibernate
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
-		//alojamientos.add(alojamiento1);
-		//alojamientos.add(alojamiento2);
-		LeerFicheros leer = new LeerFicheros();
-		alojamientos = leer.leerFicheroXML(alojamientos);
 		
+		// leer ficheros XML
+		LeerFicheros leer = new LeerFicheros();
+		ArrayList<Alojamiento> alojamientos = new ArrayList<Alojamiento>();
+		alojamientos = leer.leerFicheroXML(alojamientos);
+		// guardar datos en BD
 		for(Provincia provincia: leer.provincias) {
 			session.save(provincia);
 		}
-		// guardar datos en BD
+		
 		for (Alojamiento alojamiento : alojamientos) {
 			session.save(alojamiento);
 		}
 		session.getTransaction().commit();
-		
 		
 		// leer datos de la BD
 		LecturaBD lectur = new LecturaBD();
@@ -36,7 +36,6 @@ public class pruebaMain {
 
 		// cerrar sesion hibernate
 		HibernateUtil.shutdown();
-		leerFicheros.leerFicheroXML(alojamientos);
 		
 //		// iniciar sesion hibernate
 //		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -71,9 +70,6 @@ public class pruebaMain {
 //		// escribir los datos en archivo JSON
 //		LectorJSON json = new LectorJSON();
 //		json.convertirAJson(aloja);
-//
-//		// cerrar sesion hibernate
-		HibernateUtil.shutdown();
 	}
 
 }
