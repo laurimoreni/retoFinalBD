@@ -24,9 +24,14 @@ public class pruebaMain {
 		
 		// crear ArrayList - sustituir con lector XML
 		ArrayList<Alojamiento> alojamientos = new ArrayList<Alojamiento>();
-		alojamientos.add(alojamiento1);
-		alojamientos.add(alojamiento2);
+		//alojamientos.add(alojamiento1);
+		//alojamientos.add(alojamiento2);
+		LeerFicheros leer = new LeerFicheros();
+		alojamientos = leer.leerFicheroXML(alojamientos);
 		
+		for(Provincia provincia: leer.provincias) {
+			session.save(provincia);
+		}
 		// guardar datos en BD
 		for (Alojamiento alojamiento : alojamientos) {
 			session.save(alojamiento);
@@ -40,7 +45,7 @@ public class pruebaMain {
 		
 		// escribir los datos en archivo JSON
 		LectorJSON json = new LectorJSON();
-		json.convertirAJson(aloja);
+		//json.convertirAJson(aloja);
 
 		// cerrar sesion hibernate
 		HibernateUtil.shutdown();

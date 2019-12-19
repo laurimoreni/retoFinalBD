@@ -6,7 +6,7 @@
     <class name="Provincia" table="provincias">
         <id name="id" type="int" access="field">
             <column name="id" />
-            <generator class="assigned" />
+            <generator class="sequence" />
         </id>
         <property name="nombre" type="java.lang.String" access="field">
             <column name="nombre" />
