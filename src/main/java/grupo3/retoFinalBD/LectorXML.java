@@ -61,7 +61,7 @@ public class LectorXML {
 					try {
 						alojamiento.setWeb(elemento.getElementsByTagName("web").item(0).getTextContent());
 					} catch(NullPointerException e) {
-						alojamiento.setWeb("https:\\Siglo20\no-21.com");
+						alojamiento.setWeb("https://Siglo20/no-21.com");
 					}
 					try {
 						alojamiento.setMarks(elemento.getElementsByTagName("marks").item(0).getTextContent());
