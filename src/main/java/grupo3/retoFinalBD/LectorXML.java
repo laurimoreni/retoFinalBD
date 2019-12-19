@@ -28,7 +28,6 @@ public class LectorXML {
 				if(nodo.getNodeType() == Node.ELEMENT_NODE) {
 					Element elemento = (Element) nodo;
 					Alojamiento alojamiento = new Alojamiento();
-					alojamiento.setSignatura(elemento.getElementsByTagName("signatura").item(0).getTextContent());
 					try {
 						alojamiento.setDocumentname(elemento.getElementsByTagName("documentname").item(0).getTextContent());
 					} catch(NullPointerException e) {
@@ -126,7 +125,6 @@ public class LectorXML {
 					} catch(NullPointerException e) {
 						alojamiento.setAutocaravana(0);
 					}
-					System.out.println(elemento.getElementsByTagName("signatura").item(0).getTextContent());
 					alojamientos.add(alojamiento);
 				}
 			}

@@ -43,11 +43,7 @@ public class LeerFicheros {
 				String nombreFichero = datos[5] + ".xml";
 				certificadosHTTPS();
 				descargarFichero(fuente, nombreFichero);
-				//File fichero = new File(nombreFichero);
-				//alojamientos = miLectorXML.CargarAlojamientos(fichero, alojamientos, this);
 				if (!ficheroActualizado(nombreFichero)) {
-					//File fichero = new File(nombreFichero);
-					//alojamientos = miLectorXML.CargarAlojamientos(fichero, alojamientos);
 					actualizarFichero(nombreFichero);
 					File fichero2 = new File(nombreFichero);
 					alojamientos = miLectorXML.CargarAlojamientos(fichero2, alojamientos, this);

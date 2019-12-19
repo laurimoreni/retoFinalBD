@@ -5,9 +5,9 @@
 <hibernate-mapping package="grupo3.retoFinalBD">
     <class name="Alojamiento" table="alojamientos">
     
-        <id name="signatura" type="java.lang.String" access="field">
+        <id name="signatura" type="int" access="field">
             <column name="signatura" />
-            <generator class="uuid2" />
+            <generator class="increment" />
         </id>
         
         <property name="documentname" type="java.lang.String" access="field">
