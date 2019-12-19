@@ -24,6 +24,9 @@ import org.apache.commons.io.FileUtils;
 
 
 public class LeerFicheros {
+	
+	ArrayList<Provincia> provincias = new ArrayList<Provincia>();
+	ArrayList<String> nombreProvincia = new ArrayList<String>();
 	/**
 	 * Lee el archivo sacado de cada URL, las cuales estan guardadas en el array fuentes
 	 * @author Elorrieta Errekamari
@@ -40,10 +43,15 @@ public class LeerFicheros {
 				String nombreFichero = datos[5] + ".xml";
 				certificadosHTTPS();
 				descargarFichero(fuente, nombreFichero);
+				//File fichero = new File(nombreFichero);
+				//alojamientos = miLectorXML.CargarAlojamientos(fichero, alojamientos, this);
 				if (!ficheroActualizado(nombreFichero)) {
+					//File fichero = new File(nombreFichero);
+					//alojamientos = miLectorXML.CargarAlojamientos(fichero, alojamientos);
 					actualizarFichero(nombreFichero);
 					File ficheroXML = new File(nombreFichero);
-					alojamientos = miLectorXML.CargarAlojamientos(ficheroXML, alojamientos);
+					alojamientos = miLectorXML.CargarAlojamientos(ficheroXML, alojamientos, this);
+
 				}
 			}
 		}
