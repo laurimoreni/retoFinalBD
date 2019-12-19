@@ -25,8 +25,8 @@ import org.apache.commons.io.FileUtils;
 
 public class LeerFicheros {
 	
-	ArrayList<Provincia> provincias = new ArrayList<Provincia>();
-	ArrayList<String> nombreProvincia = new ArrayList<String>();
+	public ArrayList<Provincia> provincias = new ArrayList<Provincia>();
+	
 	/**
 	 * Lee el archivo sacado de cada URL, las cuales estan guardadas en el array fuentes
 	 * @author Elorrieta Errekamari
@@ -35,6 +35,8 @@ public class LeerFicheros {
 	public ArrayList<Alojamiento> leerFicheroXML(ArrayList<Alojamiento> alojamientos) {		
 		LectorXML miLectorXML = new LectorXML();	
 		ArrayList<URL> fuentes = leerFicheroFuentes();
+		
+		cargarprovincias();
 		
 		if (fuentes.size() > 0) {
 			
@@ -170,7 +172,11 @@ public class LeerFicheros {
 			}
 		}
 		
-		
 	}
 	
+	public void cargarprovincias() {		
+		provincias.add(new Provincia(1, "Bizkaia/Vizcaya"));
+		provincias.add(new Provincia(2, "Araba/Álava"));
+		provincias.add(new Provincia(3, "Gipuzkoa/Guipuzcoa"));
+	}
 }

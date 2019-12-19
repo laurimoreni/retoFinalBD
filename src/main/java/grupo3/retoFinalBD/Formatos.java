@@ -11,7 +11,7 @@ public class Formatos {
 	 */
 	public String formatoNumero(String texto) {
 		
-		texto.replace("\\s","");
+		texto = texto.replaceAll("\\s","");
 		
 		return texto;
 	}
