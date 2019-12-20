@@ -1,8 +1,10 @@
 package grupo3.retoFinalBD;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.Session;
+
 
 import grupo3.retoFinalBD.vista.VentanaPpal;
 
@@ -30,8 +32,13 @@ public class Principal {
 		alojamientos = leer.leerFicheroXML(alojamientos, provincias);
 		
 		// guardar datos en BD
-		for(Provincia provincia: provincias) {
-			session.save(provincia);
+		//Comprobar si ya están las provincias en la BD
+		List<Provincia> provinciasBD = session.createQuery("from Provincia").list();
+		if (provinciasBD.size() == 0) {
+			
+			for(Provincia provincia: provincias) {
+				session.save(provincia);
+			}
 		}
 		
 		for (Alojamiento alojamiento : alojamientos) {
