@@ -1,41 +1,21 @@
 package grupo3.retoFinalBD;
 
-import java.util.ArrayList;
-
-import org.hibernate.Session;
+import grupo3.retoFinalBD.vista.VentanaPpal;
 
 public class pruebaMain {
 
 	public static void main(String[] args) {
 		
-		// iniciar sesion hibernate
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
-		
-		// leer ficheros XML
-		LeerFicheros leer = new LeerFicheros();
-		ArrayList<Alojamiento> alojamientos = new ArrayList<Alojamiento>();
-		alojamientos = leer.leerFicheroXML(alojamientos);
-		
-		// guardar datos en BD
-		for(Provincia provincia: leer.provincias) {
-			session.save(provincia);
+		try {
+			VentanaPpal vista = new VentanaPpal();
+			Principal ppal = new Principal(vista);
+			vista.setVisible(true);
+			
+			ppal.procesoPpal();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
-		for (Alojamiento alojamiento : alojamientos) {
-			session.save(alojamiento);
-		}
-		session.getTransaction().commit();
-		
-		// leer datos de la BD
-		// LecturaBD lectur = new LecturaBD();
-		
-		// escribir los datos en archivo JSON
-		LectorJSON json = new LectorJSON();
-		json.convertirAJson(alojamientos);
-
-		// cerrar sesion hibernate
-		HibernateUtil.shutdown();
 		
 	}
 

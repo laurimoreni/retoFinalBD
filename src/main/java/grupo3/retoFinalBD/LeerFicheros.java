@@ -22,35 +22,47 @@ import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.io.FileUtils;
 
+import grupo3.retoFinalBD.vista.VentanaPpal;
+
 
 public class LeerFicheros {
+	private VentanaPpal vista;
 	
-	public ArrayList<Provincia> provincias = new ArrayList<Provincia>();
+	public LeerFicheros(VentanaPpal vista) {
+		this.vista = vista;
+	}
 	
 	/**
 	 * Lee el archivo sacado de cada URL, las cuales estan guardadas en el array fuentes
 	 * @author Elorrieta Errekamari
 	 *
 	 */
-	public ArrayList<Alojamiento> leerFicheroXML(ArrayList<Alojamiento> alojamientos) {		
+	public ArrayList<Alojamiento> leerFicheroXML(ArrayList<Alojamiento> alojamientos, ArrayList<Provincia> provincias) {		
 		LectorXML miLectorXML = new LectorXML();	
 		ArrayList<URL> fuentes = leerFicheroFuentes();
 		
-		cargarprovincias();
-		
 		if (fuentes.size() > 0) {
+			int cont = 1;
 			
 			for (URL fuente: fuentes) {
 				String[] datos = fuente.toString().split("/");
 				String nombreFichero = datos[5] + ".xml";
 				certificadosHTTPS();
+				vista.textArea.append("Descargando fichero fuente " + cont + "...\n");
 				descargarFichero(fuente, nombreFichero);
+				vista.textArea.append("Fichero fuente " + cont + " descargado.\n");
+				vista.textArea.append("Comprobandoo fichero fuente " + cont + "...\n");
 				if (!ficheroActualizado(nombreFichero)) {
+					vista.textArea.append("Fichero fuente " + cont + " nuevo.\n");
+					vista.textArea.append("Actualizando datos de fichero fuente " + cont + "...\n");
 					actualizarFichero(nombreFichero);
 					File ficheroXML = new File(nombreFichero);
-					alojamientos = miLectorXML.CargarAlojamientos(ficheroXML, alojamientos, this);
+					alojamientos = miLectorXML.CargarAlojamientos(ficheroXML, alojamientos, provincias, this);
 
+				} else {
+					vista.textArea.append("No es necesario actualizar el fichero fuente " + cont + ".\n");
 				}
+				cont ++;
 			}
 		}
 		return alojamientos;
@@ -64,6 +76,8 @@ public class LeerFicheros {
 		File origenes = new File("ficheros.txt");
 		String linea = null;
 		BufferedReader br = null;
+		
+		vista.textArea.append("Leyendo fichero de fuentes...\n");
 		
 		if (origenes != null) {
 			try {
@@ -120,6 +134,8 @@ public class LeerFicheros {
 	
 	public void descargarFichero (URL fuente, String nombre) {
 		File fichero = null;
+		FileOutputStream fos = null;
+		
 		try {
 			// Comprobar que existe la carpeta temporal
 			Path ruta = Paths.get("Temp");
@@ -128,10 +144,18 @@ public class LeerFicheros {
 				fichero.getParentFile().mkdir();
 			}
 			ReadableByteChannel rbc = Channels.newChannel(fuente.openStream());
-			FileOutputStream fos = new FileOutputStream(fichero.getPath());
+			fos = new FileOutputStream(fichero.getPath());
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 		} catch(Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (fos != null) {
+				try {
+					fos.close();
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+			}
 		}
 		
 		fichero = null;
@@ -173,10 +197,5 @@ public class LeerFicheros {
 		}
 		
 	}
-	
-	public void cargarprovincias() {		
-		provincias.add(new Provincia(1, "Bizkaia/Vizcaya"));
-		provincias.add(new Provincia(2, "Araba/Álava"));
-		provincias.add(new Provincia(3, "Gipuzkoa/Guipuzcoa"));
-	}
+
 }

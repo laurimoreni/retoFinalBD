@@ -14,7 +14,7 @@ import org.w3c.dom.NodeList;
 
 public class LectorXML {
 
-	public ArrayList<Alojamiento> CargarAlojamientos(File archivo, ArrayList<Alojamiento> alojamientos, LeerFicheros leer){
+	public ArrayList<Alojamiento> CargarAlojamientos(File archivo, ArrayList<Alojamiento> alojamientos, ArrayList<Provincia> provincias, LeerFicheros leer){
 		Formatos formato = new Formatos();
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -75,9 +75,9 @@ public class LectorXML {
 					}
 					try {
 						String provincia = elemento.getElementsByTagName("territory").item(0).getTextContent();
-						comprobarProvincia(provincia, leer);
+						comprobarProvincia(provincias, provincia, leer);
 					} catch(NullPointerException e) {
-						alojamiento.setProvincia(leer.provincias.get(0));
+						alojamiento.setProvincia(provincias.get(0));
 					}
 					try {
 						alojamiento.setLatwgs84(Float.parseFloat(elemento.getElementsByTagName("latwgs84").item(0).getTextContent()));
@@ -129,21 +129,21 @@ public class LectorXML {
 		provincia.setNombre(nombre);
 		provincia.setId(id);
 		provincias.add(provincia);
-		leer.provincias.add(provincia);
+		provincias.add(provincia);
 		return provincias;
 	}
 	
-	public String comprobarProvincia(String provincia, LeerFicheros leer) {
+	public String comprobarProvincia(ArrayList<Provincia> provincias, String provincia, LeerFicheros leer) {
 		
 		provincia = Normalizer.normalize(provincia, Normalizer.Form.NFD);   
 		provincia = (provincia.replaceAll("[^\\p{ASCII}]", "")).toLowerCase();
 		
 		if (provincia.contains("alava") || provincia.contains("araba")) {
-			return leer.provincias.get(1).getNombre();
+			return provincias.get(1).getNombre();
 		} else if (provincia.contains("vizcaya") || provincia.contains("bizkaia")) {
-			return leer.provincias.get(0).getNombre();
+			return provincias.get(0).getNombre();
 		} else if (provincia.contains("guipuzcoa") || provincia.contains("gipuzkoa"))  {
-			return leer.provincias.get(2).getNombre();
+			return provincias.get(2).getNombre();
 		} else {
 			return "";
 		}
