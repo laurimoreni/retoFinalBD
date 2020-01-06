@@ -33,7 +33,8 @@ public class Principal {
 			
 			// guardar datos en BD
 			//Comprobar si ya están las provincias en la BD
-			List<Provincia> provinciasBD = session.createQuery("from Provincia").list();
+			@SuppressWarnings("unchecked")
+			List<Provincia> provinciasBD = (List<Provincia>) session.createQuery("from Provincia").list();
 			if (provinciasBD.size() == 0) {
 				
 				for(Provincia provincia: provincias) {
