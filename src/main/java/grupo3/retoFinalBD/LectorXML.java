@@ -14,7 +14,7 @@ import org.w3c.dom.NodeList;
 
 public class LectorXML {
 
-	public ArrayList<Alojamiento> CargarAlojamientos(File archivo, ArrayList<Alojamiento> alojamientos, ArrayList<Provincia> provincias, LeerFicheros leer){
+	public ArrayList<Alojamiento> cargarAlojamientos(File archivo, ArrayList<Alojamiento> alojamientos, ArrayList<Provincia> provincias, LeerFicheros leer){
 		Formatos formato = new Formatos();
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -123,9 +123,8 @@ public class LectorXML {
 		return alojamientos;
 	}
 	
-	public ArrayList<Provincia> CargarProvincias(String nombre, ArrayList<Provincia> provincias, int id, LeerFicheros leer){
+	public ArrayList<Provincia> cargarProvincias(String nombre, ArrayList<Provincia> provincias, int id, LeerFicheros leer){
 		Provincia provincia = new Provincia();
-		
 		provincia.setNombre(nombre);
 		provincia.setId(id);
 		provincias.add(provincia);
@@ -134,10 +133,8 @@ public class LectorXML {
 	}
 	
 	public String comprobarProvincia(ArrayList<Provincia> provincias, String provincia, LeerFicheros leer) {
-		
 		provincia = Normalizer.normalize(provincia, Normalizer.Form.NFD);   
 		provincia = (provincia.replaceAll("[^\\p{ASCII}]", "")).toLowerCase();
-		
 		if (provincia.contains("alava") || provincia.contains("araba")) {
 			return provincias.get(1).getNombre();
 		} else if (provincia.contains("vizcaya") || provincia.contains("bizkaia")) {
