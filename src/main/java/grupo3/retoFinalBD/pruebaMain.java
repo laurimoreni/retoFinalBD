@@ -3,7 +3,7 @@ package grupo3.retoFinalBD;
 import grupo3.retoFinalBD.vista.VentanaPpal;
 
 public class pruebaMain {
-
+	
 	public static void main(String[] args) {
 		
 		try {

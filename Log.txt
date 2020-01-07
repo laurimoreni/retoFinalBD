@@ -1,0 +1,5 @@
+07/01/2020 - 09:26:43 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+07/01/2020 - 09:26:44 - grupo3.retoFinalBD.LeerFicheros - Fichero fuentealojamientos_rurales_euskadi.xml descargado.
+07/01/2020 - 09:26:44 - grupo3.retoFinalBD.LeerFicheros - Fichero fuentealbergues_de_euskadi.xml descargado.
+07/01/2020 - 09:26:44 - grupo3.retoFinalBD.LeerFicheros - Fichero fuentecampings_de_euskadi.xml descargado.
+07/01/2020 - 09:26:45 - grupo3.retoFinalBD.Principal - Fichero JSON exportado.

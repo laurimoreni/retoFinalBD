@@ -13,7 +13,9 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -27,9 +29,12 @@ import grupo3.retoFinalBD.vista.VentanaPpal;
 
 public class LeerFicheros {
 	private VentanaPpal vista;
+	private Logger logger;
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY - hh:mm:ss");
 	
 	public LeerFicheros(VentanaPpal vista) {
 		this.vista = vista;
+		this.logger = Logger.getSingletonInstance();
 	}
 	
 	/**
@@ -51,11 +56,13 @@ public class LeerFicheros {
 				vista.textArea.append("Descargando fichero fuente " + cont + "...\n");
 				descargarFichero(fuente, nombreFichero);
 				vista.textArea.append("Fichero fuente " + cont + " descargado.\n");
-				vista.textArea.append("Comprobandoo fichero fuente " + cont + "...\n");
+				vista.textArea.append("Comprobando fichero fuente " + cont + "...\n");
+				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero fuente " + datos[5] + ".xml descargado.");
 				if (!ficheroActualizado(nombreFichero)) {
 					vista.textArea.append("Fichero fuente " + cont + " nuevo.\n");
 					vista.textArea.append("Actualizando datos de fichero fuente " + cont + "...\n");
 					actualizarFichero(nombreFichero);
+					logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero fuente " + datos[5] + ".xml actualizado.");
 					File ficheroXML = new File(nombreFichero);
 					alojamientos = miLectorXML.CargarAlojamientos(ficheroXML, alojamientos, provincias, this);
 
