@@ -7,7 +7,7 @@
     
         <id name="signatura" type="int" access="field">
             <column name="signatura" />
-            <generator class="increment" />
+            <!--  <generator class="increment" />-->
         </id>
         
         <property name="documentname" type="java.lang.String" access="field">

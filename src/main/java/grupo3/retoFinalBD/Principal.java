@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.hibernate.Session;
 
 
@@ -48,8 +50,14 @@ public class Principal {
 				}
 			}
 			
-			for (Alojamiento alojamiento : alojamientos) {
-				session.save(alojamiento);
+			if (alojamientos.size() > 0) {
+				int id = 1;
+				
+				for (Alojamiento alojamiento: alojamientos) {
+					alojamiento.setSignatura(id);
+					session.save(alojamiento);
+					id++;
+				}
 			}
 			session.getTransaction().commit();
 			
@@ -64,7 +72,7 @@ public class Principal {
 			logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero JSON exportado.");
 			// cerrar sesion hibernate
 			HibernateUtil.shutdown();
-		} catch (ExceptionInInitializerError ex) {
+		} catch (Exception ex) { //ExceptionInInitializerError'
 			vista.textArea.append("Error en la conexión a la Base de Datos\n");
 			logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - ERROR en la conexión a la base de datos.");
 		} finally {

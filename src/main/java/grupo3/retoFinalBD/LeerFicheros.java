@@ -48,6 +48,7 @@ public class LeerFicheros {
 		
 		if (fuentes.size() > 0) {
 			int cont = 1;
+			ArrayList<String> ficherosNoActualizados = new ArrayList<String>();
 			
 			for (URL fuente: fuentes) {
 				String[] datos = fuente.toString().split("/");

@@ -75,7 +75,8 @@ public class LectorXML {
 					}
 					try {
 						String provincia = elemento.getElementsByTagName("territory").item(0).getTextContent();
-						comprobarProvincia(provincias, provincia, leer);
+						alojamiento.setProvincia(comprobarProvincia(provincias, provincia, leer));
+						
 					} catch(NullPointerException e) {
 						alojamiento.setProvincia(provincias.get(0));
 					}
@@ -123,29 +124,29 @@ public class LectorXML {
 		return alojamientos;
 	}
 	
-	public ArrayList<Provincia> CargarProvincias(String nombre, ArrayList<Provincia> provincias, int id, LeerFicheros leer){
-		Provincia provincia = new Provincia();
-		
-		provincia.setNombre(nombre);
-		provincia.setId(id);
-		provincias.add(provincia);
-		provincias.add(provincia);
-		return provincias;
-	}
-	
-	public String comprobarProvincia(ArrayList<Provincia> provincias, String provincia, LeerFicheros leer) {
+//	public ArrayList<Provincia> CargarProvincias(String nombre, ArrayList<Provincia> provincias, int id, LeerFicheros leer){
+//		Provincia provincia = new Provincia();
+//		
+//		provincia.setNombre(nombre);
+//		provincia.setId(id);
+//		provincias.add(provincia);
+//		provincias.add(provincia);
+//		return provincias;
+//	}
+//	
+	public Provincia comprobarProvincia(ArrayList<Provincia> provincias, String provincia, LeerFicheros leer) {
 		
 		provincia = Normalizer.normalize(provincia, Normalizer.Form.NFD);   
 		provincia = (provincia.replaceAll("[^\\p{ASCII}]", "")).toLowerCase();
 		
 		if (provincia.contains("alava") || provincia.contains("araba")) {
-			return provincias.get(1).getNombre();
+			return provincias.get(1);
 		} else if (provincia.contains("vizcaya") || provincia.contains("bizkaia")) {
-			return provincias.get(0).getNombre();
+			return provincias.get(0);
 		} else if (provincia.contains("guipuzcoa") || provincia.contains("gipuzkoa"))  {
-			return provincias.get(2).getNombre();
+			return provincias.get(2);
 		} else {
-			return "";
+			return provincias.get(1);
 		}
 	}
 }
