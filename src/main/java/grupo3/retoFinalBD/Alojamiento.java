@@ -1,5 +1,9 @@
 package grupo3.retoFinalBD;
 
+import java.awt.Image;
+import java.io.FileInputStream;
+import java.sql.Blob;
+
 public class Alojamiento {
 
 	private int signatura;
@@ -20,8 +24,9 @@ public class Alojamiento {
 	private int restaurant;
 	private int store;
 	private int autocaravana;
+	private Blob imagen;
 	
-	public Alojamiento(int signatura, String documentname, String turismdescription, String lodgingtype, String address, String phone, String tourismemail, String web, String marks, String municipality, Provincia provincia, float latwgs84, float lonwgs84, String postalcode, int capacity, int restaurant, int store, int autocaravana) {
+	public Alojamiento(int signatura, String documentname, String turismdescription, String lodgingtype, String address, String phone, String tourismemail, String web, String marks, String municipality, Provincia provincia, float latwgs84, float lonwgs84, String postalcode, int capacity, int restaurant, int store, int autocaravana, Blob imagen) {
 		this.signatura = signatura;
 		this.documentname = documentname;
 		this.turismdescription = turismdescription;
@@ -40,6 +45,7 @@ public class Alojamiento {
 		this.restaurant = restaurant;
 		this.store = store;
 		this.autocaravana = autocaravana;
+		this.imagen = imagen;
 	}
 	
 	public Alojamiento() {
@@ -117,6 +123,10 @@ public class Alojamiento {
 	public void setAutocaravana(int autocaravana) {
 		this.autocaravana = autocaravana;
 	}
+	
+	public void setImagen(Blob imagen) {
+		this.imagen = imagen;
+	}
 
 	public int getSignatura() {
 		return signatura;
@@ -188,5 +198,9 @@ public class Alojamiento {
 
 	public int getAutocaravana() {
 		return autocaravana;
+	}
+	
+	public Blob getImagen() {
+		return imagen;
 	}
 }

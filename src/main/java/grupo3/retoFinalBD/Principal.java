@@ -1,12 +1,18 @@
 package grupo3.retoFinalBD;
 
+import java.awt.Image;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
+import org.apache.commons.io.IOUtils;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -88,6 +94,7 @@ public class Principal {
 			if (actualizar) {
 				// Borrar tabla alojamientos
 				String query = "DELETE from Alojamiento";
+				@SuppressWarnings("rawtypes")
 				Query q = session.createQuery(query);
 				q.executeUpdate();
 				
@@ -105,7 +112,9 @@ public class Principal {
 					//int id = 1;
 					
 					for (Alojamiento alojamiento: alojamientos) {
-						//alojamiento.setSignatura(id);
+						File img = new File("imagen.jpg");
+						FileInputStream fis = new FileInputStream(img);
+						alojamiento.setImagen(getFileAsByteA(fis));
 						session2.save(alojamiento);
 						//id++;
 					}
@@ -135,6 +144,14 @@ public class Principal {
 		} finally {
 			vista.btnOk.setEnabled(true);
 		}
+	}
+	
+	public byte[] getFileAsByteA(FileInputStream file) {
+	    try {
+	        return IOUtils.toByteArray(file);
+	    } catch (IOException ex) {
+	        return null;
+	    }
 	}
 			
 }

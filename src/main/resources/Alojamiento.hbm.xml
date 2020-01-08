@@ -56,6 +56,9 @@
         <property name="autocaravana" type="int" access="field">
             <column name="autocaravana" />
         </property>
+        <property name="imagen" type="blob" access="field">
+        	<column name="imagen" />
+        </property>
         
     </class>
 </hibernate-mapping>
