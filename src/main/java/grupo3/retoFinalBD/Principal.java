@@ -7,10 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
 import org.hibernate.Session;
-
+import org.hibernate.query.Query;
 
 import grupo3.retoFinalBD.vista.VentanaPpal;
 
@@ -58,9 +56,10 @@ public class Principal {
 				}
 			}
 
-			// cargar arraylist alojamientos
+			// Comprobar ficheros nuevos
 			vista.textArea.append("Leyendo fichero de fuentes...\n");
 			fuentes = leer.leerFicheroFuentes("ficheros.txt");
+			boolean actualizar = false;
 			if (fuentes.size() > 0) {
 				int cont = 1;
 				for (URL fuente: fuentes) {
@@ -77,8 +76,7 @@ public class Principal {
 						vista.textArea.append("Actualizando datos de fichero fuente " + cont + "...\n");
 						leer.actualizarFichero(nombreFichero);
 						logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero fuente " + datos[5] + ".xml actualizado.");
-						File ficheroXML = new File(nombreFichero);
-						alojamientos = lectorXML.cargarAlojamientos(ficheroXML, alojamientos, provincias, leer);
+						actualizar = true;
 					} else {
 						vista.textArea.append("No es necesario actualizar el fichero fuente " + cont + ".\n");
 					}
@@ -86,16 +84,33 @@ public class Principal {
 				}
 			}
 			
-			// guardar alojamientos en BD
-
-			if (alojamientos.size() > 0) {
-				int id = 1;
+			// cargar arraylist alojamientos
+			if (actualizar) {
+				// Borrar tabla alojamientos
+				String query = "DELETE from Alojamiento";
+				Query q = session.createQuery(query);
+				q.executeUpdate();
 				
-				for (Alojamiento alojamiento: alojamientos) {
-					alojamiento.setSignatura(id);
-					session.save(alojamiento);
-					id++;
+				for (URL fuente: fuentes) {
+					String[] datos = fuente.toString().split("/");
+					String nombreFichero = datos[5] + ".xml";
+					File ficheroXML = new File(nombreFichero);
+					alojamientos = lectorXML.cargarAlojamientos(ficheroXML, alojamientos, provincias, leer);
 				}
+			
+				// guardar alojamientos en BD
+				Session session2 = HibernateUtil.getSessionFactory().openSession();
+				session2.beginTransaction();
+				if (alojamientos.size() > 0) {
+					//int id = 1;
+					
+					for (Alojamiento alojamiento: alojamientos) {
+						//alojamiento.setSignatura(id);
+						session2.save(alojamiento);
+						//id++;
+					}
+				}
+				session2.getTransaction().commit();
 			}
 			
 			// commit de los datos guardados
@@ -114,7 +129,7 @@ public class Principal {
 			// cerrar sesion hibernate
 			HibernateUtil.shutdown();
 			
-		} catch (ExceptionInInitializerError ex) {
+		} catch (Exception ex) {
 			vista.textArea.append("Error en la conexión a la Base de Datos\n");
 			logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - ERROR en la conexión a la base de datos.");
 		} finally {
