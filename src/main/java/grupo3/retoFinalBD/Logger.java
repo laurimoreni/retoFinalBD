@@ -18,7 +18,6 @@ public class Logger {
 		if (logger == null) {
 			logger = new Logger();
 		}
-
 		return logger;
 	}
 
@@ -29,11 +28,9 @@ public class Logger {
 
 		try {
 			f = new File("Log.txt");
-
 			if (!f.exists()) {
 				f.createNewFile();
 			}
-			
 			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f, true), StandardCharsets.UTF_8));
 			printW = new PrintWriter(writer);
 			printW.println(mensaje);

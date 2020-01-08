@@ -10,9 +10,7 @@ public class Formatos {
 	 * @return
 	 */
 	public String formatoNumero(String texto) {
-		
 		texto = texto.replaceAll("\\s","");
-		
 		return texto;
 	}
 	
@@ -23,7 +21,6 @@ public class Formatos {
 	 */
 	public ArrayList<String> formatoMarks (String texto){
 		ArrayList<String> resultado = new ArrayList<String>();
-		
 		if (texto.contains(",")) {
 			String[] retexto = texto.split(",");
 			for(int i=0; i < retexto.length; i++) {

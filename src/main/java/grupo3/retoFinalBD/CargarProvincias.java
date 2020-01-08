@@ -7,7 +7,6 @@ public class CargarProvincias {
 		provincias.add(new Provincia(1, "Bizkaia/Vizcaya"));
 		provincias.add(new Provincia(2, "Araba/Álava"));
 		provincias.add(new Provincia(3, "Gipuzkoa/Guipuzcoa"));
-		
 		return provincias;
 	}
 }

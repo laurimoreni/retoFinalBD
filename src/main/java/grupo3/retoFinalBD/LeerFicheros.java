@@ -24,80 +24,36 @@ import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.io.FileUtils;
 
-import grupo3.retoFinalBD.vista.VentanaPpal;
-
 
 public class LeerFicheros {
-	private VentanaPpal vista;
 	private Logger logger;
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY - hh:mm:ss");
+	private SimpleDateFormat dateFormat;
 	
-	public LeerFicheros(VentanaPpal vista) {
-		this.vista = vista;
+	public LeerFicheros() {
 		this.logger = Logger.getSingletonInstance();
+		this.dateFormat = new SimpleDateFormat("dd/MM/YYYY - hh:mm:ss");
 	}
 	
 	/**
-	 * Lee el archivo sacado de cada URL, las cuales estan guardadas en el array fuentes
-	 * @author Elorrieta Errekamari
-	 *
-	 */
-	public ArrayList<Alojamiento> leerFicheroXML(ArrayList<Alojamiento> alojamientos, ArrayList<Provincia> provincias) {		
-		LectorXML miLectorXML = new LectorXML();	
-		ArrayList<URL> fuentes = leerFicheroFuentes();
-		
-		if (fuentes.size() > 0) {
-			int cont = 1;
-			ArrayList<String> ficherosNoActualizados = new ArrayList<String>();
-			
-			for (URL fuente: fuentes) {
-				String[] datos = fuente.toString().split("/");
-				String nombreFichero = datos[5] + ".xml";
-				certificadosHTTPS();
-				vista.textArea.append("Descargando fichero fuente " + cont + "...\n");
-				descargarFichero(fuente, nombreFichero);
-				vista.textArea.append("Fichero fuente " + cont + " descargado.\n");
-				vista.textArea.append("Comprobando fichero fuente " + cont + "...\n");
-				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero fuente " + datos[5] + ".xml descargado.");
-				if (!ficheroActualizado(nombreFichero)) {
-					vista.textArea.append("Fichero fuente " + cont + " nuevo.\n");
-					vista.textArea.append("Actualizando datos de fichero fuente " + cont + "...\n");
-					actualizarFichero(nombreFichero);
-					logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero fuente " + datos[5] + ".xml actualizado.");
-					File ficheroXML = new File(nombreFichero);
-					alojamientos = miLectorXML.CargarAlojamientos(ficheroXML, alojamientos, provincias, this);
 
-				} else {
-					vista.textArea.append("No es necesario actualizar el fichero fuente " + cont + ".\n");
-				}
-				cont ++;
-			}
-		}
-		return alojamientos;
-	}
-	/**
 	 * Crea un array con las URLs necesarias y las guarda en ficheros.txt
 	 * @return
 	 */
-	public ArrayList<URL> leerFicheroFuentes() {
+	public ArrayList<URL> leerFicheroFuentes(String filename) {
 		ArrayList<URL> fuentes = new ArrayList<URL>();
-		File origenes = new File("ficheros.txt");
+		File origenes = new File(filename);
 		String linea = null;
 		BufferedReader br = null;
-		
-		vista.textArea.append("Leyendo fichero de fuentes...\n");
-		
 		if (origenes != null) {
 			try {
 				br = new BufferedReader(new InputStreamReader(new FileInputStream(origenes.getPath())));
-				
 				while ((linea= br.readLine()) != null) {
 					fuentes.add(new URL(linea));
 				}
 			} catch (FileNotFoundException fnfEx) {
-				fnfEx.printStackTrace();
+				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + "No se ha encontrado el archivo " + filename);
 			} catch (IOException ioEx) {
-				ioEx.printStackTrace();
+				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + "Operacion E/S fallida o interrunpida");
 			} finally {
 				if (br != null) {
 					try {
@@ -107,9 +63,7 @@ public class LeerFicheros {
 					}
 				}
 			}
-			
 		}
-		
 		return fuentes; 
 	}
 	
@@ -130,20 +84,19 @@ public class LeerFicheros {
 		        }
 		    }
 		};
-
-		// Activate the new trust manager
+		// Activa el nuevo trust manager
 		try {
 		    SSLContext sc = SSLContext.getInstance("SSL");
 		    sc.init(null, trustAllCerts, new java.security.SecureRandom());
 		    HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 		} catch (Exception e) {
+			logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + "Error al iniciar los certificados HTTPS");
 		}
 	}
 	
-	public void descargarFichero (URL fuente, String nombre) {
+	public void descargarFichero(URL fuente, String nombre) {
 		File fichero = null;
 		FileOutputStream fos = null;
-		
 		try {
 			// Comprobar que existe la carpeta temporal
 			Path ruta = Paths.get("Temp");
@@ -155,7 +108,7 @@ public class LeerFicheros {
 			fos = new FileOutputStream(fichero.getPath());
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 		} catch(Exception e) {
-			e.printStackTrace();
+			logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + "Error al descargar el archivo " + nombre);
 		} finally {
 			if (fos != null) {
 				try {
@@ -165,45 +118,36 @@ public class LeerFicheros {
 				}
 			}
 		}
-		
 		fichero = null;
 	}
 	
-	public boolean ficheroActualizado(String nombre) {
+	public boolean checkFicheroActualizado(String nombre) {
 		File ficheroViejo = new File(nombre);
 		File ficheroNuevo = new File("Temp/" + nombre);
-
 		boolean actualizado = false;
-		
 		if (ficheroViejo.isFile() && ficheroNuevo.isFile()) {
-			
 			try {
 				actualizado = FileUtils.contentEquals(ficheroNuevo, ficheroViejo);
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + "Error al comprobar si el archivo " + nombre +  " esta actualizado");
 			}
 		}
-		
 		return actualizado;
-		
 	}
 	
 	public void actualizarFichero(String nombre) {
 		File ficheroViejo = FileUtils.getFile(nombre);
 		File ficheroNuevo = FileUtils.getFile("Temp/" + nombre);
-		
 		if (ficheroViejo.isFile()) {
 			ficheroViejo.delete();
 		}
-		
 		if (ficheroNuevo.isFile()) {
 			try {
 				FileUtils.copyFile(ficheroNuevo, ficheroViejo);
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + "Error al actualizar el archivo " + nombre);
 			}
 		}
-		
 	}
 
 }
