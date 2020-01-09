@@ -149,14 +149,6 @@ public class Principal {
 			vista.btnOk.setEnabled(true);
 		}
 	}
-//	
-//	public byte[] getFileAsByteA(FileInputStream file) {
-//	    try {
-//	        return IOUtils.toByteArray(file);
-//	    } catch (IOException ex) {
-//	        return null;
-//	    }
-//	}
 			
 	public static Blob imagenToBlob ( Image imagen ) {
 
