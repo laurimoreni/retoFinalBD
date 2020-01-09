@@ -118,8 +118,6 @@ public class Principal {
 				if (alojamientos.size() > 0) {
 					
 					for (Alojamiento alojamiento: alojamientos) {
-						Image img = ImageIO.read(new File("imagen.jpg"));
-						alojamiento.setImagen(imagenToBlob(img));
 						session2.save(alojamiento);
 					}
 				}
@@ -149,33 +147,5 @@ public class Principal {
 			vista.btnOk.setEnabled(true);
 		}
 	}
-			
-	public static Blob imagenToBlob ( Image imagen ) {
 
-	      Blob imagenBlob = null;
-	      BufferedImage bi = new BufferedImage ( imagen.getWidth ( null ), imagen.getHeight ( null ), BufferedImage.TYPE_INT_ARGB );
-	      Graphics bg = bi.getGraphics ();
-	      bg.drawImage ( imagen, 0, 0, null );
-	      bg.dispose ();
-
-	      ByteArrayOutputStream baos = new ByteArrayOutputStream ();
-	      try {
-	         ImageIO.write (bi, "jpg", baos );
-	         baos.flush ();
-	         baos.close ();
-	      } catch ( IOException e ) {
-	         e.printStackTrace ();
-	      }
-
-	      byte [] imagenByte = baos.toByteArray ();
-
-	      try {
-	         imagenBlob = new SerialBlob ( imagenByte );
-	      } catch ( SerialException se ) {
-	         se.printStackTrace ();
-	      } catch ( SQLException sqle ) {
-	         sqle.printStackTrace ();
-	      }
-	      return imagenBlob;
-	   }
 }

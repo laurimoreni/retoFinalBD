@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -96,7 +97,9 @@ public class LeerFicheros {
 	
 	public void descargarFichero(URL fuente, String nombre) {
 		File fichero = null;
-		FileOutputStream fos = null;
+//		FileOutputStream fos = null;
+		FileChannel fos = null;
+		ReadableByteChannel rbc = null;
 		try {
 			// Comprobar que existe la carpeta temporal
 			Path ruta = Paths.get("ficheros/Temp");
@@ -104,15 +107,23 @@ public class LeerFicheros {
 			if (!Files.exists(ruta)) {	
 				fichero.getParentFile().mkdir();
 			}
-			ReadableByteChannel rbc = Channels.newChannel(fuente.openStream());
-			fos = new FileOutputStream(fichero.getPath());
-			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+			rbc = Channels.newChannel(fuente.openStream());
+//			fos = new FileOutputStream(fichero.getPath());
+			fos = new FileOutputStream(fichero.getPath()).getChannel();
+			fos.transferFrom(rbc, 0, Long.MAX_VALUE);
 		} catch(Exception e) {
 			logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + "Error al descargar el archivo " + nombre);
 		} finally {
 			if (fos != null) {
 				try {
 					fos.close();
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+			}
+			if (rbc != null) {
+				try {
+					rbc.close();
 				} catch (IOException ex) {
 					ex.printStackTrace();
 				}
