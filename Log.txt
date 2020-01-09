@@ -309,3 +309,37 @@
 08/01/2020 - 01:16:55 - grupo3.retoFinalBD.Principal - Fichero fuente albergues_de_euskadi.xml descargado.
 08/01/2020 - 01:16:55 - grupo3.retoFinalBD.Principal - Fichero fuente albergues_de_euskadi.xml actualizado.
 08/01/2020 - 01:16:55 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+09/01/2020 - 08:18:46 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+09/01/2020 - 08:18:47 - grupo3.retoFinalBD.Principal - Fichero fuente alojamientos_rurales_euskadi.xml descargado.
+09/01/2020 - 08:18:48 - grupo3.retoFinalBD.Principal - Fichero fuente albergues_de_euskadi.xml descargado.
+09/01/2020 - 08:18:48 - grupo3.retoFinalBD.Principal - Fichero fuente albergues_de_euskadi.xml actualizado.
+09/01/2020 - 08:18:48 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+09/01/2020 - 08:18:49 - grupo3.retoFinalBD.Principal - Fichero JSON exportado.
+09/01/2020 - 08:24:04 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+09/01/2020 - 08:24:05 - grupo3.retoFinalBD.Principal - Fichero fuente alojamientos_rurales_euskadi.xml descargado.
+09/01/2020 - 08:24:05 - grupo3.retoFinalBD.Principal - Fichero fuente albergues_de_euskadi.xml descargado.
+09/01/2020 - 08:24:06 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+09/01/2020 - 08:24:06 - grupo3.retoFinalBD.Principal - Fichero JSON exportado.
+09/01/2020 - 08:28:54 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+09/01/2020 - 08:28:55 - grupo3.retoFinalBD.Principal - Fichero fuente alojamientos_rurales_euskadi.xml descargado.
+09/01/2020 - 08:28:55 - grupo3.retoFinalBD.Principal - Fichero fuente albergues_de_euskadi.xml descargado.
+09/01/2020 - 08:28:55 - grupo3.retoFinalBD.Principal - Fichero fuente albergues_de_euskadi.xml actualizado.
+09/01/2020 - 08:28:55 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+09/01/2020 - 08:29:12 - grupo3.retoFinalBD.Principal - Fichero JSON exportado.
+09/01/2020 - 08:33:57 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+09/01/2020 - 08:33:58 - grupo3.retoFinalBD.Principal - Fichero fuente alojamientos_rurales_euskadi.xml descargado.
+09/01/2020 - 08:33:58 - grupo3.retoFinalBD.Principal - Fichero fuente albergues_de_euskadi.xml descargado.
+09/01/2020 - 08:33:58 - grupo3.retoFinalBD.Principal - Fichero fuente albergues_de_euskadi.xml actualizado.
+09/01/2020 - 08:33:59 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+09/01/2020 - 08:34:15 - grupo3.retoFinalBD.Principal - Fichero JSON exportado.
+09/01/2020 - 08:58:36 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+09/01/2020 - 08:58:37 - grupo3.retoFinalBD.Principal - Fichero fuente alojamientos_rurales_euskadi.xml descargado.
+09/01/2020 - 08:58:37 - grupo3.retoFinalBD.Principal - Fichero fuente albergues_de_euskadi.xml descargado.
+09/01/2020 - 08:58:38 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+09/01/2020 - 08:58:38 - grupo3.retoFinalBD.Principal - Fichero JSON exportado.
+09/01/2020 - 08:58:54 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+09/01/2020 - 08:58:55 - grupo3.retoFinalBD.Principal - Fichero fuente alojamientos_rurales_euskadi.xml descargado.
+09/01/2020 - 08:58:55 - grupo3.retoFinalBD.Principal - Fichero fuente albergues_de_euskadi.xml descargado.
+09/01/2020 - 08:58:55 - grupo3.retoFinalBD.Principal - Fichero fuente albergues_de_euskadi.xml actualizado.
+09/01/2020 - 08:58:55 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+09/01/2020 - 08:59:12 - grupo3.retoFinalBD.Principal - Fichero JSON exportado.

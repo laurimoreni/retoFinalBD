@@ -1,16 +1,23 @@
 package grupo3.retoFinalBD;
 
+import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 
 import org.apache.commons.io.IOUtils;
 import org.hibernate.Session;
@@ -109,14 +116,11 @@ public class Principal {
 				Session session2 = HibernateUtil.getSessionFactory().openSession();
 				session2.beginTransaction();
 				if (alojamientos.size() > 0) {
-					//int id = 1;
 					
 					for (Alojamiento alojamiento: alojamientos) {
-						File img = new File("imagen.jpg");
-						FileInputStream fis = new FileInputStream(img);
-						alojamiento.setImagen(getFileAsByteA(fis));
+						Image img = ImageIO.read(new File("imagen.jpg"));
+						alojamiento.setImagen(imagenToBlob(img));
 						session2.save(alojamiento);
-						//id++;
 					}
 				}
 				session2.getTransaction().commit();
@@ -145,13 +149,41 @@ public class Principal {
 			vista.btnOk.setEnabled(true);
 		}
 	}
-	
-	public byte[] getFileAsByteA(FileInputStream file) {
-	    try {
-	        return IOUtils.toByteArray(file);
-	    } catch (IOException ex) {
-	        return null;
-	    }
-	}
+//	
+//	public byte[] getFileAsByteA(FileInputStream file) {
+//	    try {
+//	        return IOUtils.toByteArray(file);
+//	    } catch (IOException ex) {
+//	        return null;
+//	    }
+//	}
 			
+	public static Blob imagenToBlob ( Image imagen ) {
+
+	      Blob imagenBlob = null;
+	      BufferedImage bi = new BufferedImage ( imagen.getWidth ( null ), imagen.getHeight ( null ), BufferedImage.TYPE_INT_ARGB );
+	      Graphics bg = bi.getGraphics ();
+	      bg.drawImage ( imagen, 0, 0, null );
+	      bg.dispose ();
+
+	      ByteArrayOutputStream baos = new ByteArrayOutputStream ();
+	      try {
+	         ImageIO.write (bi, "jpg", baos );
+	         baos.flush ();
+	         baos.close ();
+	      } catch ( IOException e ) {
+	         e.printStackTrace ();
+	      }
+
+	      byte [] imagenByte = baos.toByteArray ();
+
+	      try {
+	         imagenBlob = new SerialBlob ( imagenByte );
+	      } catch ( SerialException se ) {
+	         se.printStackTrace ();
+	      } catch ( SQLException sqle ) {
+	         sqle.printStackTrace ();
+	      }
+	      return imagenBlob;
+	   }
 }
