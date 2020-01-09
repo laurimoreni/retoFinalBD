@@ -99,7 +99,7 @@ public class LeerFicheros {
 		FileOutputStream fos = null;
 		try {
 			// Comprobar que existe la carpeta temporal
-			Path ruta = Paths.get("Temp");
+			Path ruta = Paths.get("ficheros/Temp");
 			fichero = new File(ruta.toString() + "/" + nombre);
 			if (!Files.exists(ruta)) {	
 				fichero.getParentFile().mkdir();
@@ -122,8 +122,8 @@ public class LeerFicheros {
 	}
 	
 	public boolean checkFicheroActualizado(String nombre) {
-		File ficheroViejo = new File(nombre);
-		File ficheroNuevo = new File("Temp/" + nombre);
+		File ficheroViejo = new File("ficheros/" + nombre);
+		File ficheroNuevo = new File("ficheros/Temp/" + nombre);
 		boolean actualizado = false;
 		if (ficheroViejo.isFile() && ficheroNuevo.isFile()) {
 			try {
@@ -136,8 +136,8 @@ public class LeerFicheros {
 	}
 	
 	public void actualizarFichero(String nombre) {
-		File ficheroViejo = FileUtils.getFile(nombre);
-		File ficheroNuevo = FileUtils.getFile("Temp/" + nombre);
+		File ficheroViejo = FileUtils.getFile("ficheros/" + nombre);
+		File ficheroNuevo = FileUtils.getFile("ficheros/Temp/" + nombre);
 		if (ficheroViejo.isFile()) {
 			ficheroViejo.delete();
 		}

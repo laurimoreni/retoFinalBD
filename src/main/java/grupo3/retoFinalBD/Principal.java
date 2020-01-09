@@ -71,7 +71,7 @@ public class Principal {
 
 			// Comprobar ficheros nuevos
 			vista.textArea.append("Leyendo fichero de fuentes...\n");
-			fuentes = leer.leerFicheroFuentes("ficheros.txt");
+			fuentes = leer.leerFicheroFuentes("ficheros/ficheros_origen.txt");
 			boolean actualizar = false;
 			if (fuentes.size() > 0) {
 				int cont = 1;

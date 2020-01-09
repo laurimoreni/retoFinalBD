@@ -19,7 +19,7 @@ public class LectorXML {
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document documento = builder.parse(archivo);
+			Document documento = builder.parse("ficheros/" + archivo);
 			
 			documento.getDocumentElement().normalize();
 			NodeList nodos = documento.getElementsByTagName("row");
