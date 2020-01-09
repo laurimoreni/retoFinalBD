@@ -14,6 +14,9 @@
   <property access="field" generated="never" lazy="false" name="apellidos" type="java.lang.String">
    <column name="apellido"/>
   </property>
+  <property access="field" generated="never" lazy="false" name="email" type="java.lang.String">
+   <column name="email"/>
+  </property>
   <property access="field" generated="never" lazy="false" name="contrasena" type="java.lang.String">
    <column name="contrasena"/>
   </property>
