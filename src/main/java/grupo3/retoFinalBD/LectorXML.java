@@ -24,6 +24,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.io.FileUtils;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -31,7 +33,7 @@ import org.w3c.dom.NodeList;
 
 public class LectorXML {
 
-	public ArrayList<Alojamiento> cargarAlojamientos(File archivo, ArrayList<Alojamiento> alojamientos, ArrayList<Provincia> provincias, LeerFicheros leer){
+	public ArrayList<Alojamiento> cargarAlojamientos(File archivo, ArrayList<Alojamiento> alojamientos, ArrayList<Provincia> provincias, LeerFicheros leer, Session session){
 		Formatos formato = new Formatos();
 		
 		try {
@@ -82,11 +84,6 @@ public class LectorXML {
 						alojamiento.setWeb("https://Siglo20/no-21.com");
 					}
 					try {
-						alojamiento.setMarks(elemento.getElementsByTagName("marks").item(0).getTextContent());
-					} catch(NullPointerException e) {
-						alojamiento.setMarks("Vacío");
-					}
-					try {
 						alojamiento.setMunicipality(elemento.getElementsByTagName("municipality").item(0).getTextContent());
 					} catch(NullPointerException e) {
 						alojamiento.setMunicipality("Amorebieta");
@@ -135,23 +132,32 @@ public class LectorXML {
 					}
 					try {
 						String zipFileUrl = elemento.getElementsByTagName("zipfile").item(0).getTextContent();
-						String[] partesRuta = zipFileUrl.split("/"); 
+						String[] partesRuta = zipFileUrl.split("/");
+						// Descargar ZIP del alojamiento
 						leer.descargarFichero(new URL(zipFileUrl), partesRuta[partesRuta.length - 1]);
+						// Extraer imagen según tipo de alojamiento
 						if (archivo.getPath().contains("alojamientos")) {
 							extraerImagenAloj(partesRuta[partesRuta.length - 1]);
 						} else {
 							extraerImagen(partesRuta[partesRuta.length - 1]);
 						}
-						Image img = ImageIO.read(new File("imagen.jpg"));
+						// Convertir imagen a binario
+						File ficheroImagen = new File("ficheros/Temp/imagen.jpg");
+						Image img;
+						if (ficheroImagen.exists()) {
+							img = ImageIO.read(ficheroImagen);
+							FileUtils.forceDelete(ficheroImagen);
+						} else {
+							img = ImageIO.read(new File("imagen.jpg"));
+						}
+//						alojamiento.setImagen(imagenToBlob2(ficheroImagen));
 						alojamiento.setImagen(imagenToBlob(img));
-						File ficheroTemp = new File("ficheros/Temp/" + partesRuta[partesRuta.length - 1]);
-						if (ficheroTemp.exists()) {
-							FileUtils.forceDelete(ficheroTemp);
+						// Borrar archivos temporales
+						File ficheroZip = new File("ficheros/Temp/" + partesRuta[partesRuta.length - 1]);
+						if (ficheroZip.exists()) {
+							FileUtils.forceDelete(ficheroZip);
 						}
-						File imagenTemp = new File("ficheros/Temp/imagen.jpg");
-						if (ficheroTemp.exists()) {
-							FileUtils.forceDelete(imagenTemp);
-						}
+						
 					} catch(NullPointerException e) {
 						alojamiento.setImagen(imagenToBlob(ImageIO.read(new File("imagen.jpg"))));
 					} catch (Exception ex) {
@@ -249,18 +255,16 @@ public class LectorXML {
 				
 				if (carpetas[1].substring(0, 2).equals("es") && carpetas[2].equals("images")) {
 					if (carpetas.length == 4) {
-						if (salida.getSize() > 100000) {
+						if (salida.getSize() > 50000) {
 							fos = new FileOutputStream(directorioZip + "imagen.jpg");
 							int leer;
 							byte[] buffer = new byte[1024];
 							while (0 < (leer = zis.read(buffer))) {
 								fos.write(buffer, 0, leer);
 							}
-							
 							getImage = true;
 						}
 					}
-					
 				}				
 			}
 		} catch (FileNotFoundException e) {
@@ -312,4 +316,17 @@ public class LectorXML {
 		}
 		return imagenBlob;
 	}
+	
+//	public static Blob imagenToBlob2( File file, Session session) {
+//	    FileInputStream inputStream;
+//		try {
+//			inputStream = new FileInputStream(file);
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	    Blob blob = Hibernate.getLobCreator(session).createBlob(inputStream, file.length());
+//	    
+//	    return blob;
+//	}
 }

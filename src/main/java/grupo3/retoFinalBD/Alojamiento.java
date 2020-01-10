@@ -1,7 +1,5 @@
 package grupo3.retoFinalBD;
 
-import java.awt.Image;
-import java.io.FileInputStream;
 import java.sql.Blob;
 
 public class Alojamiento {
@@ -14,7 +12,6 @@ public class Alojamiento {
 	private String phone;
 	private String tourismemail;
 	private String web;
-	private String marks;
 	private String municipality;
 	private Provincia provincia;
 	private float latwgs84;
@@ -26,7 +23,7 @@ public class Alojamiento {
 	private int autocaravana;
 	private Blob imagen;
 	
-	public Alojamiento(int signatura, String documentname, String turismdescription, String lodgingtype, String address, String phone, String tourismemail, String web, String marks, String municipality, Provincia provincia, float latwgs84, float lonwgs84, String postalcode, int capacity, int restaurant, int store, int autocaravana, Blob imagen) {
+	public Alojamiento(int signatura, String documentname, String turismdescription, String lodgingtype, String address, String phone, String tourismemail, String web, String municipality, Provincia provincia, float latwgs84, float lonwgs84, String postalcode, int capacity, int restaurant, int store, int autocaravana, Blob imagen) {
 		this.signatura = signatura;
 		this.documentname = documentname;
 		this.turismdescription = turismdescription;
@@ -35,7 +32,6 @@ public class Alojamiento {
 		this.phone = phone;
 		this.tourismemail = tourismemail;
 		this.web = web;
-		this.marks = marks;
 		this.municipality = municipality;
 		this.provincia = provincia;
 		this.latwgs84 = latwgs84;
@@ -82,10 +78,6 @@ public class Alojamiento {
 
 	public void setWeb(String web) {
 		this.web = web;
-	}
-
-	public void setMarks(String marks) {
-		this.marks = marks;
 	}
 
 	public void setMunicipality(String municipality) {
@@ -159,11 +151,7 @@ public class Alojamiento {
 	public String getWeb() {
 		return web;
 	}
-
-	public String getMarks() {
-		return marks;
-	}
-
+	
 	public String getMunicipality() {
 		return municipality;
 	}

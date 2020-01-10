@@ -1,25 +1,12 @@
 package grupo3.retoFinalBD;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.net.URL;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-import javax.sql.rowset.serial.SerialBlob;
-import javax.sql.rowset.serial.SerialException;
-
-import org.apache.commons.io.IOUtils;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -109,7 +96,7 @@ public class Principal {
 					String[] datos = fuente.toString().split("/");
 					String nombreFichero = datos[5] + ".xml";
 					File ficheroXML = new File(nombreFichero);
-					alojamientos = lectorXML.cargarAlojamientos(ficheroXML, alojamientos, provincias, leer);
+					alojamientos = lectorXML.cargarAlojamientos(ficheroXML, alojamientos, provincias, leer, session);
 				}
 			
 				// guardar alojamientos en BD

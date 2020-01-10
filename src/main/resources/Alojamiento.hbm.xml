@@ -31,8 +31,8 @@
         <property name="web" type="java.lang.String" access="field">
             <column name="web" />
         </property>
-        <property name="marks" type="java.lang.String" access="field">
-            <column name="marks" />
+        <property name="municipality" type="java.lang.String" access="field">
+            <column name="municipality" />
         </property>
         <many-to-one name="provincia" column="territory" class="Provincia" foreign-key="PROVINCIA" cascade="all"></many-to-one>
         <property name="latwgs84" type="float" access="field">
