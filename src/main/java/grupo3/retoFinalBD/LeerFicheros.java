@@ -156,15 +156,15 @@ public class LeerFicheros {
 	public void actualizarFichero(String nombre) {
 		File ficheroViejo = FileUtils.getFile("ficheros/" + nombre);
 		File ficheroNuevo = FileUtils.getFile("ficheros/Temp/" + nombre);
-		if (ficheroViejo.isFile()) {
-			ficheroViejo.delete();
-		}
-		if (ficheroNuevo.isFile()) {
-			try {
-				FileUtils.copyFile(ficheroNuevo, ficheroViejo);
-			} catch (IOException e) {
-				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + "Error al actualizar el archivo " + nombre);
+		try {
+			if (ficheroViejo.exists()) {
+				FileUtils.forceDelete(ficheroViejo);
 			}
+			if (ficheroNuevo.exists()) {				
+				FileUtils.copyFile(ficheroNuevo, ficheroViejo);
+			}
+		} catch (IOException e) {
+				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + "Error al actualizar el archivo " + nombre);
 		}
 	}
 

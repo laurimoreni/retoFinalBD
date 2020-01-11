@@ -1,12 +1,14 @@
 package grupo3.retoFinalBD;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -70,60 +72,71 @@ public class Principal {
 					leer.descargarFichero(fuente, nombreFichero);
 					vista.textArea.append("Fichero fuente " + cont + " descargado.\n");
 					vista.textArea.append("Comprobando fichero fuente " + cont + "...\n");
-					logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero fuente " + datos[5] + ".xml descargado.");
+					logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero fuente " + nombreFichero + " descargado.");
 					if (!leer.checkFicheroActualizado(nombreFichero)) {
 						vista.textArea.append("Fichero fuente " + cont + " nuevo.\n");
 						vista.textArea.append("Actualizando datos de fichero fuente " + cont + "...\n");
 						leer.actualizarFichero(nombreFichero);
-						logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero fuente " + datos[5] + ".xml actualizado.");
+						logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero fuente " + nombreFichero + " actualizado.");
 						actualizar = true;
 					} else {
 						vista.textArea.append("No es necesario actualizar el fichero fuente " + cont + ".\n");
 					}
+					try {
+						FileUtils.forceDelete(new File("ficheros/Temp/" + nombreFichero));
+					} catch (IOException ex) {
+						logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - ERROR fichero temporal " + nombreFichero + "no se pudo borrar.");
+					}
 					cont ++;
 				}
-			}
 			
-			// cargar arraylist alojamientos
-			if (actualizar) {
-				// Borrar tabla alojamientos
-				String query = "DELETE from Alojamiento";
-				@SuppressWarnings("rawtypes")
-				Query q = session.createQuery(query);
-				q.executeUpdate();
-				
-				for (URL fuente: fuentes) {
-					String[] datos = fuente.toString().split("/");
-					String nombreFichero = datos[5] + ".xml";
-					File ficheroXML = new File(nombreFichero);
-					alojamientos = lectorXML.cargarAlojamientos(ficheroXML, alojamientos, provincias, leer, session);
-				}
-			
-				// guardar alojamientos en BD
-				Session session2 = HibernateUtil.getSessionFactory().openSession();
-				session2.beginTransaction();
-				if (alojamientos.size() > 0) {
+				// cargar arraylist alojamientos
+				if (actualizar) {
+					// Borrar tabla alojamientos
+					String query = "DELETE from Alojamiento";
+					@SuppressWarnings("rawtypes")
+					Query q = session.createQuery(query);
+					q.executeUpdate();
 					
-					for (Alojamiento alojamiento: alojamientos) {
-						session2.save(alojamiento);
+					cont = 1;
+					for (URL fuente: fuentes) {
+						String[] datos = fuente.toString().split("/");
+						String nombreFichero = datos[5] + ".xml";
+						File ficheroXML = new File(nombreFichero);
+						vista.textArea.append("Actualizando alojamientos de fichero de fuentes " + cont + " en base de datos...\n");
+						alojamientos = lectorXML.cargarAlojamientos(ficheroXML, alojamientos, provincias, leer, session);
+						cont++;
 					}
+				
+					// guardar alojamientos en BD
+					Session session2 = HibernateUtil.getSessionFactory().openSession();
+					session2.beginTransaction();
+					if (alojamientos.size() > 0) {
+						
+						for (Alojamiento alojamiento: alojamientos) {
+							session2.save(alojamiento);
+						}
+					}
+					session2.getTransaction().commit();
 				}
-				session2.getTransaction().commit();
+				
+				// commit de los datos guardados
+				session.getTransaction().commit();
+				
+				// leer datos de la BD
+				// LecturaBD lectur = new LecturaBD();
+				
+				// escribir los datos en archivo JSON
+				vista.textArea.append("Exportando JSON...\n");
+				LectorJSON json = new LectorJSON();
+				json.convertirAJson(alojamientos);
+				vista.textArea.append("JSON exportado.\n");
+				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero JSON exportado.");
+
+			} else {
+				vista.textArea.append("Fichero de fuentes no econtrado o vacío.");
+				vista.textArea.append("Proceso terminado.");
 			}
-			
-			// commit de los datos guardados
-			session.getTransaction().commit();
-			
-			// leer datos de la BD
-			// LecturaBD lectur = new LecturaBD();
-			
-			// escribir los datos en archivo JSON
-			vista.textArea.append("Exportando JSON...\n");
-			LectorJSON json = new LectorJSON();
-			json.convertirAJson(alojamientos);
-			vista.textArea.append("JSON exportado.\n");
-			logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero JSON exportado.");
-			
 			// cerrar sesion hibernate
 			HibernateUtil.shutdown();
 			

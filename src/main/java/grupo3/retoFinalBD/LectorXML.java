@@ -24,12 +24,13 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.io.FileUtils;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import org.apache.commons.codec.binary.Base64;
 
 public class LectorXML {
 
@@ -150,8 +151,7 @@ public class LectorXML {
 						} else {
 							img = ImageIO.read(new File("imagen.jpg"));
 						}
-//						alojamiento.setImagen(imagenToBlob2(ficheroImagen));
-						alojamiento.setImagen(imagenToBlob(img));
+						alojamiento.setImagen(imagenToBlob2(img));
 						// Borrar archivos temporales
 						File ficheroZip = new File("ficheros/Temp/" + partesRuta[partesRuta.length - 1]);
 						if (ficheroZip.exists()) {
@@ -296,7 +296,7 @@ public class LectorXML {
 		bg.drawImage ( imagen, 0, 0, null );
 		bg.dispose ();
 
-		ByteArrayOutputStream baos = new ByteArrayOutputStream ();
+		ByteArrayOutputStream baos = new ByteArrayOutputStream (1000);
 		try {
 			ImageIO.write (bi, "jpg", baos );
 			baos.flush ();
@@ -317,16 +317,26 @@ public class LectorXML {
 		return imagenBlob;
 	}
 	
-//	public static Blob imagenToBlob2( File file, Session session) {
-//	    FileInputStream inputStream;
-//		try {
-//			inputStream = new FileInputStream(file);
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	    Blob blob = Hibernate.getLobCreator(session).createBlob(inputStream, file.length());
-//	    
-//	    return blob;
-//	}
+	public Blob imagenToBlob2(Image imagen) throws IOException{
+		Blob imagenBlob = null;
+		ByteArrayOutputStream baos=new ByteArrayOutputStream(1000);
+		BufferedImage img=(BufferedImage) imagen;
+		ImageIO.write(img, "jpg", baos);
+		baos.flush();
+ 
+		String base64String = Base64.encodeBase64String(baos.toByteArray());
+		baos.close();
+
+		byte[] imagenByte = Base64.decodeBase64(base64String);
+		
+		try {
+			imagenBlob = new SerialBlob ( imagenByte );
+		} catch (SerialException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+ 
+		return imagenBlob;
+	}
 }
