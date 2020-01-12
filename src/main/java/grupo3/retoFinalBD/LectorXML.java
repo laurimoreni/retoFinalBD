@@ -149,7 +149,7 @@ public class LectorXML {
 						}
 						alojamiento.setImagen(imagenToBlob(img));
 						// Borrar archivos de imagen temporales
-						borrarImagenes();			
+						borrarArchivos();			
 					} catch(NullPointerException e) {
 						alojamiento.setImagen(imagenToBlob(ImageIO.read(new File("imagen.jpg"))));
 					} catch (Exception ex) {
@@ -185,6 +185,7 @@ public class LectorXML {
 		ZipInputStream zis = null;
 		FileOutputStream fos = null;
 		boolean getImages = false;
+		int cont = 0;
 		
 		try {
 			//crea un buffer temporal para el archivo que se va descomprimir
@@ -193,9 +194,9 @@ public class LectorXML {
 			ZipEntry salida;
 			//recorre todo el buffer extrayendo uno a uno cada archivo.zip y creándolos de nuevo en su archivo original 
 			while ((salida = zis.getNextEntry()) != null && !getImages) {
-				String[] carpetas = salida.getName().split("/");
-				
-				if (carpetas[1].substring(0, 2).equals("es") && carpetas[2].equals("images")) { //estamos en la carpeta images de la version española
+				while (salida.getName().contains("/images/") && !getImages) {
+					salida = zis.getNextEntry();
+					String[] carpetas = salida.getName().split("/");
 					if (carpetas.length == 4) {													//estamos en un archivo dentro de la carpeta images
 						fos = new FileOutputStream(directorioZip + carpetas[3]);
 						int leer;
@@ -210,8 +211,13 @@ public class LectorXML {
 								e.printStackTrace();
 							}
 						}
+						cont ++;
+					} else {
+						if (cont > 0) {
+							getImages = true;
+						}
 					}
-				}				
+				}			
 			}
 			
 		} catch (FileNotFoundException e) {
@@ -253,7 +259,7 @@ public class LectorXML {
 		return imagen;
 	}
 	
-	public void borrarImagenes() {
+	public void borrarArchivos() {
 		File[] imagenes = new File("ficheros/Temp/").listFiles();
 		
 		for (File temp : imagenes) {
