@@ -24,6 +24,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.hibernate.Session;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -136,28 +137,19 @@ public class LectorXML {
 						String[] partesRuta = zipFileUrl.split("/");
 						// Descargar ZIP del alojamiento
 						leer.descargarFichero(new URL(zipFileUrl), partesRuta[partesRuta.length - 1]);
-						// Extraer imagen según tipo de alojamiento
-						if (archivo.getPath().contains("alojamientos")) {
-							extraerImagenAloj(partesRuta[partesRuta.length - 1]);
-						} else {
-							extraerImagen(partesRuta[partesRuta.length - 1]);
-						}
-						// Convertir imagen a binario
-						File ficheroImagen = new File("ficheros/Temp/imagen.jpg");
+						// Extraer imagenes del alojamiento
+						extraerImagenes(partesRuta[partesRuta.length - 1]);
+						//seleccionar la imagen mas grande
+						File ficheroImagen = seleccionarImagen();
 						Image img;
 						if (ficheroImagen.exists()) {
 							img = ImageIO.read(ficheroImagen);
-							FileUtils.forceDelete(ficheroImagen);
 						} else {
 							img = ImageIO.read(new File("imagen.jpg"));
 						}
-						alojamiento.setImagen(imagenToBlob2(img));
-						// Borrar archivos temporales
-						File ficheroZip = new File("ficheros/Temp/" + partesRuta[partesRuta.length - 1]);
-						if (ficheroZip.exists()) {
-							FileUtils.forceDelete(ficheroZip);
-						}
-						
+						alojamiento.setImagen(imagenToBlob(img));
+						// Borrar archivos de imagen temporales
+						borrarImagenes();			
 					} catch(NullPointerException e) {
 						alojamiento.setImagen(imagenToBlob(ImageIO.read(new File("imagen.jpg"))));
 					} catch (Exception ex) {
@@ -188,10 +180,11 @@ public class LectorXML {
 		}
 	}
 	
-	public void extraerImagen(String fichero) {
+	public void extraerImagenes(String fichero) {
 		String directorioZip = "ficheros/Temp/";
 		ZipInputStream zis = null;
 		FileOutputStream fos = null;
+		boolean getImages = false;
 		
 		try {
 			//crea un buffer temporal para el archivo que se va descomprimir
@@ -199,74 +192,28 @@ public class LectorXML {
 	
 			ZipEntry salida;
 			//recorre todo el buffer extrayendo uno a uno cada archivo.zip y creándolos de nuevo en su archivo original 
-			while ((salida = zis.getNextEntry()) != null) {
+			while ((salida = zis.getNextEntry()) != null && !getImages) {
 				String[] carpetas = salida.getName().split("/");
 				
-				if (carpetas[1].substring(0, 2).equals("es") && carpetas[2].equals("images")) {
-					if (carpetas.length == 4) {
-						if (carpetas[3].substring(0,2).equals("FP")) {
-							fos = new FileOutputStream(directorioZip + "imagen.jpg");
-							int leer;
-							byte[] buffer = new byte[1024];
-							while (0 < (leer = zis.read(buffer))) {
-								fos.write(buffer, 0, leer);
-							}
+				if (carpetas[1].substring(0, 2).equals("es") && carpetas[2].equals("images")) { //estamos en la carpeta images de la version española
+					if (carpetas.length == 4) {													//estamos en un archivo dentro de la carpeta images
+						fos = new FileOutputStream(directorioZip + carpetas[3]);
+						int leer;
+						byte[] buffer = new byte[1024];
+						while (0 < (leer = zis.read(buffer))) {
+							fos.write(buffer, 0, leer);
 						}
-					}
-					
-				}				
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}catch(IOException e){
-			e.printStackTrace();
-		} finally {
-			if (fos != null) {
-				try {
-					fos.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if (zis != null) {
-				try {
-					zis.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-	
-	public void extraerImagenAloj(String fichero) {
-		String directorioZip = "ficheros/Temp/";
-		ZipInputStream zis = null;
-		FileOutputStream fos = null;
-		boolean getImage = false;
-		
-		try {
-			//crea un buffer temporal para el archivo que se va descomprimir
-			zis = new ZipInputStream(new FileInputStream(directorioZip + fichero));
-	
-			ZipEntry salida;
-			//recorre todo el buffer extrayendo uno a uno cada archivo.zip y creándolos de nuevo en su archivo original 
-			while ((salida = zis.getNextEntry()) != null && !getImage) {
-				String[] carpetas = salida.getName().split("/");
-				
-				if (carpetas[1].substring(0, 2).equals("es") && carpetas[2].equals("images")) {
-					if (carpetas.length == 4) {
-						if (salida.getSize() > 50000) {
-							fos = new FileOutputStream(directorioZip + "imagen.jpg");
-							int leer;
-							byte[] buffer = new byte[1024];
-							while (0 < (leer = zis.read(buffer))) {
-								fos.write(buffer, 0, leer);
+						if (fos != null) {
+							try {
+								fos.close();
+							} catch (IOException e) {
+								e.printStackTrace();
 							}
-							getImage = true;
 						}
 					}
 				}				
 			}
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}catch(IOException e){
@@ -288,36 +235,39 @@ public class LectorXML {
 		}
 	}
 	
-	public static Blob imagenToBlob ( Image imagen ) {
-
-		Blob imagenBlob = null;
-		BufferedImage bi = new BufferedImage ( imagen.getWidth ( null ), imagen.getHeight ( null ), BufferedImage.TYPE_INT_ARGB );
-		Graphics bg = bi.getGraphics ();
-		bg.drawImage ( imagen, 0, 0, null );
-		bg.dispose ();
-
-		ByteArrayOutputStream baos = new ByteArrayOutputStream (1000);
-		try {
-			ImageIO.write (bi, "jpg", baos );
-			baos.flush ();
-			baos.close ();
-		} catch ( IOException e ) {
-			e.printStackTrace ();
+	public File seleccionarImagen() {
+		File imagen = null;
+		long tamano = 0;
+		long tamanoTemp = 0;
+		
+		File[] imagenes = new File("ficheros/Temp/").listFiles();
+		
+		for (File temp : imagenes) {
+			tamanoTemp  = FileUtils.sizeOf(temp);
+			if (tamanoTemp > tamano && FilenameUtils.getExtension(temp.getName()).equals("jpg")) {
+				imagen = temp;
+				tamano = tamanoTemp;
+			}
 		}
-
-		byte [] imagenByte = baos.toByteArray ();
-
-		try {
-			imagenBlob = new SerialBlob ( imagenByte );
-		} catch ( SerialException se ) {
-			se.printStackTrace ();
-		} catch ( SQLException sqle ) {
-			sqle.printStackTrace ();
-		}
-		return imagenBlob;
+		
+		return imagen;
 	}
 	
-	public Blob imagenToBlob2(Image imagen) throws IOException{
+	public void borrarImagenes() {
+		File[] imagenes = new File("ficheros/Temp/").listFiles();
+		
+		for (File temp : imagenes) {
+			if (temp.exists()) {
+				try {
+					FileUtils.forceDelete(temp);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public Blob imagenToBlob(Image imagen) throws IOException{
 		Blob imagenBlob = null;
 		ByteArrayOutputStream baos=new ByteArrayOutputStream(1000);
 		BufferedImage img=(BufferedImage) imagen;
