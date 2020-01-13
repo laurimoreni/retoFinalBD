@@ -4,17 +4,53 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 
 public class LectorJSON {
+	
+	private Principal ppal;
+	
+	public LectorJSON(Principal ppal) {
+		this.ppal = ppal;
+	}
+	
+	/**
+	 * Convierte el arraylist de alojamientos a multiples arraylist mas pequeños de maximo 100 alojamientos y los escribe a ficheros JSON
+	 * @param array
+	 */
+	public void exportarAlojamientos(ArrayList<Alojamiento> alojamientos) {
+		ArrayList<Alojamiento> aloj = null;
+		String filename = null;
+		int size = alojamientos.size(), init = 0, fin = 99, count = 1;
+		while (fin < size) {
+			aloj = new ArrayList<Alojamiento>(alojamientos.subList(init, fin + 1));
+			filename = "alojamientos" + count + ".json";
+			arrayToJson(aloj, filename);
+			ppal.vista.textArea.append("Fichero " + filename + " creado.\n");
+			ppal.logger.escribirLog(ppal.dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero " + filename + " creado.");
+			count++;
+			init = init + 100;
+			fin = fin + 100;
+			if (fin > size) {
+				fin = size;
+				filename = "alojamientos" + count + ".json";
+				aloj = new ArrayList<Alojamiento>(alojamientos.subList(init, fin));
+				arrayToJson(aloj, filename);
+				ppal.vista.textArea.append("Fichero " + filename + " creado.\n");
+				ppal.logger.escribirLog(ppal.dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero " + filename + " creado.");
+			}
+		}
+	}
+	
 	/**
 	 * La informacion enviada dentro del arraylist lo convierte a json
 	 * @param array
 	 */
-	public void convertirAJson(ArrayList<Alojamiento> array, String filename) {
+	public void arrayToJson(ArrayList<?> array, String filename) {
 		
 		if(!array.isEmpty()) {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();

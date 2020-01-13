@@ -6,7 +6,6 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -17,15 +16,16 @@ import grupo3.retoFinalBD.vista.VentanaPpal;
 
 public class Principal {
 	
-	private VentanaPpal vista;
-	private Logger logger;
-	private SimpleDateFormat dateFormat;
+	public VentanaPpal vista;
+	public Logger logger;
+	public SimpleDateFormat dateFormat;
 	private CargarProvincias cargarProvincias;
 	private LeerFicheros leer;
 	private ArrayList<Provincia> provincias;
 	private ArrayList<Alojamiento> alojamientos;
 	private ArrayList<URL> fuentes;
 	private LectorXML lectorXML;
+	private LectorJSON json;
 	
 	public Principal (VentanaPpal vista) {
 		this.vista = vista;
@@ -36,6 +36,7 @@ public class Principal {
 		this.lectorXML = new LectorXML();
 		this.provincias = new ArrayList<Provincia>();
 		this.alojamientos = new ArrayList<Alojamiento>();
+		this.json = new LectorJSON(this);
 	}
 	
 	public void procesoPpal() {
@@ -127,27 +128,10 @@ public class Principal {
 				// leer datos de la BD
 				// LecturaBD lectur = new LecturaBD();
 				
-				// escribir los datos en archivos JSON
-				vista.textArea.append("Exportando JSON...\n");
-				LectorJSON json = new LectorJSON();
-				ArrayList<Alojamiento> aloj = null;
-				int size = alojamientos.size(), init = 0, fin = 99, count = 1;
-				while (fin < size) {
-					aloj = new ArrayList<Alojamiento>(alojamientos.subList(init, fin + 1));
-					json.convertirAJson(aloj, "alojamientos" + count + ".json");
-					vista.textArea.append("JSON " + count + " exportado.\n");
-					logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero JSON exportado.");
-					count++;
-					init = init + 100;
-					fin = fin + 100;
-					if (fin > size) {
-						fin = size;
-						aloj = new ArrayList<Alojamiento>(alojamientos.subList(init, fin));
-						json.convertirAJson(aloj, "alojamientos" + count + ".json");
-						vista.textArea.append("JSON " + count + " exportado.\n");
-						logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero JSON exportado.");
-					}
-				}
+				// exportar los datos a JSON
+				vista.textArea.append("Exportando a JSON...\n");
+				json.exportarAlojamientos(alojamientos);
+				json.arrayToJson(provincias, "provincias.json");
 
 			} else {
 				vista.textArea.append("Fichero de fuentes no econtrado o vacío.");
