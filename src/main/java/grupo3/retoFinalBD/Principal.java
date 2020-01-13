@@ -6,6 +6,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -126,12 +127,27 @@ public class Principal {
 				// leer datos de la BD
 				// LecturaBD lectur = new LecturaBD();
 				
-				// escribir los datos en archivo JSON
+				// escribir los datos en archivos JSON
 				vista.textArea.append("Exportando JSON...\n");
 				LectorJSON json = new LectorJSON();
-				json.convertirAJson(alojamientos);
-				vista.textArea.append("JSON exportado.\n");
-				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero JSON exportado.");
+				ArrayList<Alojamiento> aloj = null;
+				int size = alojamientos.size(), init = 0, fin = 99, count = 1;
+				while (fin < size) {
+					aloj = new ArrayList<Alojamiento>(alojamientos.subList(init, fin + 1));
+					json.convertirAJson(aloj, "alojamientos" + count + ".json");
+					vista.textArea.append("JSON " + count + " exportado.\n");
+					logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero JSON exportado.");
+					count++;
+					init = init + 100;
+					fin = fin + 100;
+					if (fin > size) {
+						fin = size;
+						aloj = new ArrayList<Alojamiento>(alojamientos.subList(init, fin));
+						json.convertirAJson(aloj, "alojamientos" + count + ".json");
+						vista.textArea.append("JSON " + count + " exportado.\n");
+						logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero JSON exportado.");
+					}
+				}
 
 			} else {
 				vista.textArea.append("Fichero de fuentes no econtrado o vacío.");

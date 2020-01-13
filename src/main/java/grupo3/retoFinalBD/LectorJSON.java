@@ -14,11 +14,11 @@ public class LectorJSON {
 	 * La informacion enviada dentro del arraylist lo convierte a json
 	 * @param array
 	 */
-	public void convertirAJson(ArrayList<Alojamiento> array) {
+	public void convertirAJson(ArrayList<Alojamiento> array, String filename) {
 		
 		if(!array.isEmpty()) {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			String ruta = "ficheros" + File.separator + "alojamientos.json";
+			String ruta = "ficheros" + File.separator + filename;
 			File file = new File(ruta);
 			FileWriter writer = null;
 			file.getParentFile().mkdirs();
