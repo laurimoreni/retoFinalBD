@@ -20,7 +20,7 @@
   <property access="field" generated="never" lazy="false" name="contrasena" type="java.lang.String">
    <column name="contrasena"/>
   </property>
-  <property access="field" generated="never" lazy="false" name="telefono" type="integer">
+  <property access="field" generated="never" lazy="false" name="telefono" type="java.lang.String">
    <column name="telefono"/>
   </property>
   <property access="field" generated="never" lazy="false" name="administrador" type="integer">
