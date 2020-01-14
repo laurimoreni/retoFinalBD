@@ -16,15 +16,16 @@ import grupo3.retoFinalBD.vista.VentanaPpal;
 
 public class Principal {
 	
-	private VentanaPpal vista;
-	private Logger logger;
-	private SimpleDateFormat dateFormat;
+	public VentanaPpal vista;
+	public Logger logger;
+	public SimpleDateFormat dateFormat;
 	private CargarProvincias cargarProvincias;
 	private LeerFicheros leer;
 	private ArrayList<Provincia> provincias;
 	private ArrayList<Alojamiento> alojamientos;
 	private ArrayList<URL> fuentes;
 	private LectorXML lectorXML;
+	private LectorJSON json;
 	
 	public Principal (VentanaPpal vista) {
 		this.vista = vista;
@@ -35,6 +36,7 @@ public class Principal {
 		this.lectorXML = new LectorXML();
 		this.provincias = new ArrayList<Provincia>();
 		this.alojamientos = new ArrayList<Alojamiento>();
+		this.json = new LectorJSON(this);
 	}
 	
 	public void procesoPpal() {
@@ -66,7 +68,6 @@ public class Principal {
 				
 				// commit de los datos guardados
 				session.getTransaction().commit();
-
 			} else {
 				vista.textArea.append("Fichero de fuentes no econtrado o vacío.\n");
 			}
@@ -156,8 +157,8 @@ public class Principal {
 	
 	private void exportarJSON() {
 		vista.textArea.append("Exportando JSON...\n");
-		LectorJSON json = new LectorJSON();
-		json.convertirAJson(alojamientos);
+		json.exportarAlojamientos(alojamientos);
+		json.arrayToJson(provincias, "provincias.json");
 		vista.textArea.append("JSON exportado.\n");
 		logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero JSON exportado.");
 	}

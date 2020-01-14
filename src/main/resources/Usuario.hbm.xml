@@ -23,5 +23,8 @@
   <property access="field" generated="never" lazy="false" name="telefono" type="integer">
    <column name="telefono"/>
   </property>
+  <property access="field" generated="never" lazy="false" name="administrador" type="integer">
+   <column name="administrador"/>
+  </property>
  </class>
 </hibernate-mapping>
