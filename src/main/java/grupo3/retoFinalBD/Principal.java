@@ -50,93 +50,28 @@ public class Principal {
 			
 			// cargar arraylist provincias
 			provincias = cargarProvincias.cargarProvincias(provincias);
+			guardarProvinciasBD(session);
 			
-			// guardar provincias en BD
-			@SuppressWarnings("unchecked")
-			List<Provincia> provinciasBD = (List<Provincia>) session.createQuery("from Provincia").list();
-			if (provinciasBD.size() == 0) {
-				for(Provincia provincia: provincias) {
-					session.save(provincia);
-				}
-			}
 
 			// Comprobar ficheros nuevos
 			vista.textArea.append("Leyendo fichero de fuentes...\n");
 			fuentes = leer.leerFicheroFuentes("ficheros/ficheros_origen.txt");
-			boolean actualizar = false;
 			if (fuentes.size() > 0) {
-				int cont = 1;
-				for (URL fuente: fuentes) {
-					String[] datos = fuente.toString().split("/");
-					String nombreFichero = datos[5] + ".xml";
-					leer.certificadosHTTPS();
-					vista.textArea.append("Descargando fichero fuente " + cont + "...\n");
-					leer.descargarFichero(fuente, nombreFichero);
-					vista.textArea.append("Fichero fuente " + cont + " descargado.\n");
-					vista.textArea.append("Comprobando fichero fuente " + cont + "...\n");
-					logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero fuente " + nombreFichero + " descargado.");
-					if (!leer.checkFicheroActualizado(nombreFichero)) {
-						vista.textArea.append("Fichero fuente " + cont + " nuevo.\n");
-						vista.textArea.append("Actualizando datos de fichero fuente " + cont + "...\n");
-						leer.actualizarFichero(nombreFichero);
-						logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero fuente " + nombreFichero + " actualizado.");
-						actualizar = true;
-					} else {
-						vista.textArea.append("No es necesario actualizar el fichero fuente " + cont + ".\n");
-					}
-					try {
-						FileUtils.forceDelete(new File("ficheros/Temp/" + nombreFichero));
-					} catch (IOException ex) {
-						logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - ERROR fichero temporal " + nombreFichero + "no se pudo borrar.");
-					}
-					cont ++;
-				}
-			
-				// cargar arraylist alojamientos
-				if (actualizar) {
-					// Borrar tabla alojamientos
-					String query = "DELETE from Alojamiento";
-					@SuppressWarnings("rawtypes")
-					Query q = session.createQuery(query);
-					q.executeUpdate();
-					
-					cont = 1;
-					for (URL fuente: fuentes) {
-						String[] datos = fuente.toString().split("/");
-						String nombreFichero = datos[5] + ".xml";
-						File ficheroXML = new File(nombreFichero);
-						vista.textArea.append("Actualizando alojamientos de fichero de fuentes " + cont + " en base de datos...\n");
-						alojamientos = lectorXML.cargarAlojamientos(ficheroXML, alojamientos, provincias, leer, session);
-						cont++;
-					}
-				
-					// guardar alojamientos en BD
-					Session session2 = HibernateUtil.getSessionFactory().openSession();
-					session2.beginTransaction();
-					if (alojamientos.size() > 0) {
-						
-						for (Alojamiento alojamiento: alojamientos) {
-							session2.save(alojamiento);
-						}
-					}
-					session2.getTransaction().commit();
+				if (comprobarFicheros()) {
+					borrarTablaAlojamientos(session);
+					cargarAlojamientos(session);				
+					guardarAlojamientosBD();
+					exportarJSON();
+				} else {
+					vista.textArea.append("no es necesario actualizar la base de datos.\n");
 				}
 				
 				// commit de los datos guardados
 				session.getTransaction().commit();
-				
-				// leer datos de la BD
-				// LecturaBD lectur = new LecturaBD();
-				
-				// exportar los datos a JSON
-				vista.textArea.append("Exportando a JSON...\n");
-				json.exportarAlojamientos(alojamientos);
-				json.arrayToJson(provincias, "provincias.json");
-
 			} else {
-				vista.textArea.append("Fichero de fuentes no econtrado o vacío.");
-				vista.textArea.append("Proceso terminado.");
+				vista.textArea.append("Fichero de fuentes no econtrado o vacío.\n");
 			}
+			vista.textArea.append("Proceso terminado.");
 			// cerrar sesion hibernate
 			HibernateUtil.shutdown();
 			
@@ -146,6 +81,86 @@ public class Principal {
 		} finally {
 			vista.btnOk.setEnabled(true);
 		}
+	}
+	
+	private boolean comprobarFicheros() {
+		boolean actualizar = false;
+		int cont = 1;
+		for (URL fuente: fuentes) {
+			String[] datos = fuente.toString().split("/");
+			String nombreFichero = datos[5] + ".xml";
+			leer.certificadosHTTPS();
+			vista.textArea.append("Descargando fichero fuente " + cont + "...\n");
+			leer.descargarFichero(fuente, nombreFichero);
+			vista.textArea.append("Fichero fuente " + cont + " descargado.\n");
+			vista.textArea.append("Comprobando fichero fuente " + cont + "...\n");
+			logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero fuente " + nombreFichero + " descargado.");
+			if (!leer.checkFicheroActualizado(nombreFichero)) {
+				vista.textArea.append("Fichero fuente " + cont + " nuevo.\n");
+				vista.textArea.append("Actualizando datos de fichero fuente " + cont + "...\n");
+				leer.actualizarFichero(nombreFichero);
+				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero fuente " + nombreFichero + " actualizado.");
+				actualizar = true;
+			} else {
+				vista.textArea.append("No es necesario actualizar el fichero fuente " + cont + ".\n");
+			}
+			try {
+				FileUtils.forceDelete(new File("ficheros/Temp/" + nombreFichero));
+			} catch (IOException ex) {
+				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - ERROR fichero temporal " + nombreFichero + "no se pudo borrar.");
+			}
+			cont ++;
+		}
+		return actualizar;
+	}
+	
+	private void guardarProvinciasBD(Session session) {
+		@SuppressWarnings("unchecked")
+		List<Provincia> provinciasBD = (List<Provincia>) session.createQuery("from Provincia").list();
+		if (provinciasBD.size() == 0) {
+			for(Provincia provincia: provincias) {
+				session.save(provincia);
+			}
+		}
+	}
+	
+	private void borrarTablaAlojamientos(Session session) {
+		String query = "DELETE from Alojamiento";
+		@SuppressWarnings("rawtypes")
+		Query q = session.createQuery(query);
+		q.executeUpdate();
+	}
+	
+	private void cargarAlojamientos(Session session) {
+		int cont = 1;
+		for (URL fuente: fuentes) {
+			String[] datos = fuente.toString().split("/");
+			String nombreFichero = datos[5] + ".xml";
+			File ficheroXML = new File(nombreFichero);
+			vista.textArea.append("Actualizando alojamientos de fichero de fuentes " + cont + " en base de datos...\n");
+			alojamientos = lectorXML.cargarAlojamientos(ficheroXML, alojamientos, provincias, leer, session);
+			cont++;
+		}
+	}
+	
+	private void guardarAlojamientosBD() {
+		Session session2 = HibernateUtil.getSessionFactory().openSession();
+		session2.beginTransaction();
+		if (alojamientos.size() > 0) {
+			
+			for (Alojamiento alojamiento: alojamientos) {
+				session2.save(alojamiento);
+			}
+		}
+		session2.getTransaction().commit();
+	}
+	
+	private void exportarJSON() {
+		vista.textArea.append("Exportando JSON...\n");
+		json.exportarAlojamientos(alojamientos);
+		json.arrayToJson(provincias, "provincias.json");
+		vista.textArea.append("JSON exportado.\n");
+		logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero JSON exportado.");
 	}
 
 }
