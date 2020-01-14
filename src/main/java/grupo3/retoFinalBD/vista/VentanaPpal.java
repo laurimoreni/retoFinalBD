@@ -6,7 +6,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -39,10 +41,16 @@ public class VentanaPpal extends JFrame {
 		lblNewLabel.setBounds(10, 11, 484, 24);
 		contentPane.add(lblNewLabel);
 		
+		
+		
 		textArea = new JTextArea();
 		textArea.setFont(new Font("Arial", Font.PLAIN, 14));
-		textArea.setBounds(10, 46, 484, 402);
-		contentPane.add(textArea);
+		//textArea.setBounds(10, 46, 484, 402);
+		//contentPane.add(textArea);
+		JScrollPane scroll = new JScrollPane(textArea);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scroll.setBounds(10, 46, 484, 402);
+		contentPane.add(scroll);
 		
 		btnOk = new JButton("Ok");
 		btnOk.addActionListener(new ActionListener() {

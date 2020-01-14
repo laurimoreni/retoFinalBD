@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -62,8 +63,15 @@ public class Principal {
 					cargarAlojamientos(session);				
 					guardarAlojamientosBD();
 					exportarJSON();
+					if (subirArchivosServidor()) {
+						vista.textArea.append("Archivos JSON subidos al servidor correctamente.\n");
+						logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Ficheros JSON subidos al servidor correctamente.");
+					} else {
+						vista.textArea.append("Error al subir los archivos JSON al servidor.\n");
+					}
+						
 				} else {
-					vista.textArea.append("no es necesario actualizar la base de datos.\n");
+					vista.textArea.append("No es necesario actualizar la base de datos.\n");
 				}
 				
 				// commit de los datos guardados
@@ -161,6 +169,24 @@ public class Principal {
 		json.arrayToJson(provincias, "provincias.json");
 		vista.textArea.append("JSON exportado.\n");
 		logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero JSON exportado.");
+	}
+	
+	private boolean subirArchivosServidor() {
+		FTPConnection ftp = new FTPConnection();
+		boolean archivosSubidos = true;
+		
+		vista.textArea.append("Subiendo archivos JSON al servidor...\n");
+		File[] ficherosJSON = new File("ficheros/").listFiles();
+		
+		for (File fich : ficherosJSON) {
+			if (FilenameUtils.getExtension(fich.getName()).equals("json")) {
+				if (!ftp.subirArchivo(fich))
+					archivosSubidos = false;
+					logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - ERROR al subir el fichero " + fich + " al servidor.");
+			}
+		}
+		
+		return archivosSubidos;
 	}
 
 }
