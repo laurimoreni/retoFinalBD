@@ -85,7 +85,7 @@ public class Principal {
 			
 		} catch (Exception ex) {
 			vista.textArea.append("Error en la conexión a la Base de Datos\n");
-			logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - ERROR en la conexión a la base de datos.");
+			logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - ERROR en la conexión a la base de datos: " + ex.getMessage());
 		} finally {
 			vista.btnOk.setEnabled(true);
 		}

@@ -4,7 +4,7 @@ import java.sql.Blob;
 
 public class Alojamiento {
 
-	private int signatura;
+	private String signatura;
 	private String documentname;
 	private String turismdescription;
 	private String lodgingtype;
@@ -22,8 +22,9 @@ public class Alojamiento {
 	private int store;
 	private int autocaravana;
 	private Blob imagen;
+	private int activo;
 	
-	public Alojamiento(int signatura, String documentname, String turismdescription, String lodgingtype, String address, String phone, String tourismemail, String web, String municipality, Provincia provincia, float latwgs84, float lonwgs84, String postalcode, int capacity, int restaurant, int store, int autocaravana, Blob imagen) {
+	public Alojamiento(String signatura, String documentname, String turismdescription, String lodgingtype, String address, String phone, String tourismemail, String web, String municipality, Provincia provincia, float latwgs84, float lonwgs84, String postalcode, int capacity, int restaurant, int store, int autocaravana, Blob imagen, int activo) {
 		this.signatura = signatura;
 		this.documentname = documentname;
 		this.turismdescription = turismdescription;
@@ -42,13 +43,14 @@ public class Alojamiento {
 		this.store = store;
 		this.autocaravana = autocaravana;
 		this.imagen = imagen;
+		this.activo = activo;
 	}
 	
 	public Alojamiento() {
 		
 	}
 	
-	public void setSignatura(int signatura) {
+	public void setSignatura(String signatura) {
 		this.signatura = signatura;
 	}
 
@@ -119,8 +121,12 @@ public class Alojamiento {
 	public void setImagen(Blob imagen) {
 		this.imagen = imagen;
 	}
+	
+	public void setActivo(int activo) {
+		this.activo = activo;
+	}
 
-	public int getSignatura() {
+	public String getSignatura() {
 		return signatura;
 	}
 
@@ -190,5 +196,9 @@ public class Alojamiento {
 	
 	public Blob getImagen() {
 		return imagen;
+	}
+	
+	public int getActivo() {
+		return activo;
 	}
 }

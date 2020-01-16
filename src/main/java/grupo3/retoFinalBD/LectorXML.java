@@ -12,8 +12,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.Normalizer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -37,6 +40,8 @@ public class LectorXML {
 
 	public ArrayList<Alojamiento> cargarAlojamientos(File archivo, ArrayList<Alojamiento> alojamientos, ArrayList<Provincia> provincias, LeerFicheros leer, Session session){
 		Formatos formato = new Formatos();
+		Logger logger = Logger.getSingletonInstance();
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY - hh:mm:ss");
 		
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -51,112 +56,122 @@ public class LectorXML {
 					Element elemento = (Element) nodo;
 					Alojamiento alojamiento = new Alojamiento();
 					try {
-						alojamiento.setDocumentname(elemento.getElementsByTagName("documentname").item(0).getTextContent());
-					} catch(NullPointerException e) {
-						alojamiento.setDocumentname("Sin nombre");
-					}
-					try {
-						alojamiento.setTurismdescription(elemento.getElementsByTagName("turismdescription").item(0).getTextContent());
-					} catch(NullPointerException e) {
-						alojamiento.setTurismdescription("Sin descripcion");
-					}
-					try {
-						alojamiento.setLodgingtype(elemento.getElementsByTagName("lodgingtype").item(0).getTextContent());
-					} catch(NullPointerException e) {
-						alojamiento.setLodgingtype("Algo rural");
-					}
-					try {
-						alojamiento.setAddress(elemento.getElementsByTagName("address").item(0).getTextContent());
-					} catch(NullPointerException e) {
-						alojamiento.setAddress("Norte");
-					}
-					try {
-						alojamiento.setPhone(formato.formatoNumero(elemento.getElementsByTagName("phone").item(0).getTextContent()));
-					} catch(NullPointerException e) {
-						alojamiento.setPhone("555863147");
-					}
-					try {
-						alojamiento.setTourismemail(elemento.getElementsByTagName("tourismemail").item(0).getTextContent());
-					} catch(NullPointerException e) {
-						alojamiento.setTourismemail("sin_tag@nosevalidarxml.com");
-					}
-					try {
-						alojamiento.setWeb(elemento.getElementsByTagName("web").item(0).getTextContent());
-					} catch(NullPointerException e) {
-						alojamiento.setWeb("https://Siglo20/no-21.com");
-					}
-					try {
-						alojamiento.setMunicipality(elemento.getElementsByTagName("municipality").item(0).getTextContent());
-					} catch(NullPointerException e) {
-						alojamiento.setMunicipality("Amorebieta");
-					}
-					try {
-						String provincia = elemento.getElementsByTagName("territory").item(0).getTextContent();
-						alojamiento.setProvincia(comprobarProvincia(provincias, provincia, leer));
-						
-					} catch(NullPointerException e) {
-						alojamiento.setProvincia(provincias.get(0));
-					}
-					try {
-						alojamiento.setLatwgs84(Float.parseFloat(elemento.getElementsByTagName("latwgs84").item(0).getTextContent()));
-					} catch(NullPointerException e) {
-						alojamiento.setLatwgs84(51.3901716f);
-					}
-					try {
-						alojamiento.setLonwgs84(Float.parseFloat(elemento.getElementsByTagName("lonwgs84").item(0).getTextContent()));
-					} catch(NullPointerException e) {
-						alojamiento.setLonwgs84(30.1000834f);
-					}
-					try {
-						alojamiento.setPostalcode(elemento.getElementsByTagName("postalcode").item(0).getTextContent());
-					} catch(NullPointerException e) {
-						alojamiento.setPostalcode("48340");
-					}
-					try {
-						alojamiento.setCapacity(Integer.parseInt(elemento.getElementsByTagName("capacity").item(0).getTextContent()));
-					} catch(NullPointerException e) {
-						alojamiento.setCapacity(13);
-					}
-					try {
-						alojamiento.setRestaurant(Integer.parseInt(elemento.getElementsByTagName("restaurant").item(0).getTextContent()));
-					} catch(NullPointerException e) {
-						alojamiento.setRestaurant(0);
-					}
-					try {
-						alojamiento.setStore(Integer.parseInt(elemento.getElementsByTagName("store").item(0).getTextContent()));
-					} catch(NullPointerException e) {
-						alojamiento.setStore(0);
-					}
-					try {
-						alojamiento.setAutocaravana(Integer.parseInt(elemento.getElementsByTagName("autocaravana").item(0).getTextContent()));
-					} catch(NullPointerException e) {
-						alojamiento.setAutocaravana(0);
-					}
-					try {
-						String zipFileUrl = elemento.getElementsByTagName("zipfile").item(0).getTextContent();
-						String[] partesRuta = zipFileUrl.split("/");
-						// Descargar ZIP del alojamiento
-						leer.descargarFichero(new URL(zipFileUrl), partesRuta[partesRuta.length - 1]);
-						// Extraer imagenes del alojamiento
-						extraerImagenes(partesRuta[partesRuta.length - 1]);
-						//seleccionar la imagen mas grande
-						File ficheroImagen = seleccionarImagen();
-						Image img;
-						if (ficheroImagen.exists()) {
-							img = ImageIO.read(ficheroImagen);
-						} else {
-							img = ImageIO.read(new File("imagen.jpg"));
+						String signatura = elemento.getElementsByTagName("signatura").item(0).getTextContent();
+						if (signatura != "" && signatura!= null) {
+							alojamiento.setSignatura(signatura);
+							try {
+								alojamiento.setDocumentname(elemento.getElementsByTagName("documentname").item(0).getTextContent());
+							} catch(NullPointerException e) {
+								alojamiento.setDocumentname("Sin nombre");
+							}
+							try {
+								alojamiento.setTurismdescription(elemento.getElementsByTagName("turismdescription").item(1).getTextContent());
+							} catch(NullPointerException e) {
+								alojamiento.setTurismdescription("Sin descripcion");
+							}
+							try {
+								alojamiento.setLodgingtype(elemento.getElementsByTagName("lodgingtype").item(0).getTextContent());
+							} catch(NullPointerException e) {
+								alojamiento.setLodgingtype("Algo rural");
+							}
+							try {
+								alojamiento.setAddress(elemento.getElementsByTagName("address").item(0).getTextContent());
+							} catch(NullPointerException e) {
+								alojamiento.setAddress("Norte");
+							}
+							try {
+								alojamiento.setPhone(formato.formatoNumero(elemento.getElementsByTagName("phone").item(0).getTextContent()));
+							} catch(NullPointerException e) {
+								alojamiento.setPhone("555863147");
+							}
+							try {
+								alojamiento.setTourismemail(elemento.getElementsByTagName("tourismemail").item(0).getTextContent());
+							} catch(NullPointerException e) {
+								alojamiento.setTourismemail("sin_tag@nosevalidarxml.com");
+							}
+							try {
+								alojamiento.setWeb(elemento.getElementsByTagName("web").item(0).getTextContent());
+							} catch(NullPointerException e) {
+								alojamiento.setWeb("https://Siglo20/no-21.com");
+							}
+							try {
+								alojamiento.setMunicipality(elemento.getElementsByTagName("municipality").item(0).getTextContent());
+							} catch(NullPointerException e) {
+								alojamiento.setMunicipality("Amorebieta");
+							}
+							try {
+								String provincia = elemento.getElementsByTagName("territory").item(0).getTextContent();
+								alojamiento.setProvincia(comprobarProvincia(provincias, provincia, leer));
+								
+							} catch(NullPointerException e) {
+								alojamiento.setProvincia(provincias.get(0));
+							}
+							try {
+								alojamiento.setLatwgs84(Float.parseFloat(elemento.getElementsByTagName("latwgs84").item(0).getTextContent()));
+							} catch(NullPointerException e) {
+								alojamiento.setLatwgs84(51.3901716f);
+							}
+							try {
+								alojamiento.setLonwgs84(Float.parseFloat(elemento.getElementsByTagName("lonwgs84").item(0).getTextContent()));
+							} catch(NullPointerException e) {
+								alojamiento.setLonwgs84(30.1000834f);
+							}
+							try {
+								alojamiento.setPostalcode(elemento.getElementsByTagName("postalcode").item(0).getTextContent());
+							} catch(NullPointerException e) {
+								alojamiento.setPostalcode("48340");
+							}
+							try {
+								alojamiento.setCapacity(Integer.parseInt(elemento.getElementsByTagName("capacity").item(0).getTextContent()));
+							} catch(NullPointerException e) {
+								alojamiento.setCapacity(13);
+							}
+							try {
+								alojamiento.setRestaurant(Integer.parseInt(elemento.getElementsByTagName("restaurant").item(0).getTextContent()));
+							} catch(NullPointerException e) {
+								alojamiento.setRestaurant(0);
+							}
+							try {
+								alojamiento.setStore(Integer.parseInt(elemento.getElementsByTagName("store").item(0).getTextContent()));
+							} catch(NullPointerException e) {
+								alojamiento.setStore(0);
+							}
+							try {
+								alojamiento.setAutocaravana(Integer.parseInt(elemento.getElementsByTagName("autocaravana").item(0).getTextContent()));
+							} catch(NullPointerException e) {
+								alojamiento.setAutocaravana(0);
+							}
+							try {
+								String zipFileUrl = elemento.getElementsByTagName("zipfile").item(0).getTextContent();
+								String[] partesRuta = zipFileUrl.split("/");
+								// Descargar ZIP del alojamiento
+								leer.descargarFichero(new URL(zipFileUrl), partesRuta[partesRuta.length - 1]);
+								// Extraer imagenes del alojamiento
+								extraerImagenes(partesRuta[partesRuta.length - 1]);
+								//seleccionar la imagen mas grande
+								File ficheroImagen = seleccionarImagen();
+								Image img;
+								if (ficheroImagen.exists()) {
+									img = ImageIO.read(ficheroImagen);
+								} else {
+									img = ImageIO.read(new File("imagen.jpg"));
+								}
+								alojamiento.setImagen(imagenToBlob(img));
+								// Borrar archivos de imagen temporales
+								borrarArchivos();			
+							} catch(NullPointerException e) {
+								alojamiento.setImagen(imagenToBlob(ImageIO.read(new File("imagen.jpg"))));
+							} catch (Exception ex) {
+								ex.printStackTrace();
+							}
+							
+							alojamiento.setActivo(1);
+							alojamientos.add(alojamiento);
 						}
-						alojamiento.setImagen(imagenToBlob(img));
-						// Borrar archivos de imagen temporales
-						borrarArchivos();			
-					} catch(NullPointerException e) {
-						alojamiento.setImagen(imagenToBlob(ImageIO.read(new File("imagen.jpg"))));
-					} catch (Exception ex) {
-						ex.printStackTrace();
+					} catch (Exception e) {
+						logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Alojamiento sin campo signatura.");
 					}
 					
-					alojamientos.add(alojamiento);
 				}
 			}
 		} catch(Exception e) {

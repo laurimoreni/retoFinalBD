@@ -5,16 +5,15 @@
 <hibernate-mapping package="grupo3.retoFinalBD">
     <class name="Alojamiento" table="alojamientos">
     
-        <id name="signatura" type="int" access="field">
+        <id name="signatura" type="java.lang.String" access="field">
             <column name="signatura" />
-            <generator class="increment" />
         </id>
         
         <property name="documentname" type="java.lang.String" access="field">
             <column name="documentname" />
         </property>
         <property name="turismdescription" type="java.lang.String" access="field">
-            <column name="turismdescription" />
+            <column name="turismdescription" length="10000"/>
         </property>
         <property name="lodgingtype" type="java.lang.String" access="field">
             <column name="lodgingtype" />
@@ -59,6 +58,8 @@
         <property name="imagen" type="blob" access="field">
         	<column name="imagen" />
         </property>
-        
+        <property name="activo" type="int" access="field">
+        	<column name="activo" />
+        </property>
     </class>
 </hibernate-mapping>

@@ -733,3 +733,141 @@
 14/01/2020 - 11:57:15 - grupo3.retoFinalBD.Principal - Fichero fuente alojamientos_rurales_euskadi.xml descargado.
 14/01/2020 - 11:57:15 - grupo3.retoFinalBD.Principal - Fichero fuente albergues_de_euskadi.xml descargado.
 14/01/2020 - 11:57:17 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+15/01/2020 - 09:08:51 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+15/01/2020 - 09:08:53 - grupo3.retoFinalBD.Principal - Fichero fuente alojamientos_rurales_euskadi.xml descargado.
+15/01/2020 - 09:08:53 - grupo3.retoFinalBD.Principal - Fichero fuente alojamientos_rurales_euskadi.xml actualizado.
+15/01/2020 - 09:08:54 - grupo3.retoFinalBD.Principal - Fichero fuente albergues_de_euskadi.xml descargado.
+15/01/2020 - 09:08:54 - grupo3.retoFinalBD.Principal - Fichero fuente albergues_de_euskadi.xml actualizado.
+15/01/2020 - 09:08:55 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+15/01/2020 - 09:08:55 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 11:45:07 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 11:45:08 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 11:45:32 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 11:45:33 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 11:45:33 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 11:45:50 - grupo3.retoFinalBD.Principal - ERROR en la conexión a la base de datos.
+16/01/2020 - 11:49:43 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 11:49:44 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 11:49:44 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 11:50:00 - grupo3.retoFinalBD.Principal - Fichero JSON exportado.
+16/01/2020 - 11:50:10 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos1.json al servidor.
+16/01/2020 - 11:50:19 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos2.json al servidor.
+16/01/2020 - 11:50:27 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos3.json al servidor.
+16/01/2020 - 11:50:34 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos4.json al servidor.
+16/01/2020 - 11:50:51 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos5.json al servidor.
+16/01/2020 - 11:50:51 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\provincias.json al servidor.
+16/01/2020 - 11:50:51 - grupo3.retoFinalBD.Principal - Ficheros JSON subidos al servidor correctamente.
+16/01/2020 - 11:58:35 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 11:58:36 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 11:58:36 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 11:58:50 - grupo3.retoFinalBD.Principal - ERROR en la conexión a la base de datos.
+16/01/2020 - 12:00:13 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 12:00:14 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 12:00:14 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 12:00:25 - grupo3.retoFinalBD.Principal - ERROR en la conexión a la base de datos.
+16/01/2020 - 12:01:16 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 12:01:17 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 12:01:17 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 12:03:21 - grupo3.retoFinalBD.Principal - ERROR en la conexión a la base de datos.
+16/01/2020 - 12:05:12 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 12:05:13 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 12:05:13 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 12:06:21 - grupo3.retoFinalBD.Principal - ERROR en la conexión a la base de datos.
+16/01/2020 - 12:07:08 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 12:07:09 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 12:07:09 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 12:08:22 - grupo3.retoFinalBD.Principal - ERROR en la conexión a la base de datos.
+16/01/2020 - 12:09:15 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 12:09:16 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 12:09:16 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 12:11:07 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 12:11:07 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 12:11:19 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 12:11:19 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 12:11:19 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 12:11:34 - grupo3.retoFinalBD.Principal - ERROR en la conexión a la base de datos.
+16/01/2020 - 12:12:59 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 12:13:00 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 12:13:00 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 12:13:11 - grupo3.retoFinalBD.Principal - ERROR en la conexión a la base de datos: Unknown integral data type for ids : java.lang.String
+16/01/2020 - 12:14:24 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 12:14:25 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 12:14:25 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 12:14:36 - grupo3.retoFinalBD.Principal - ERROR en la conexión a la base de datos: org.hibernate.exception.DataException: could not execute statement
+16/01/2020 - 12:15:35 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 12:15:36 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 12:15:36 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 12:15:48 - grupo3.retoFinalBD.Principal - ERROR en la conexión a la base de datos: org.hibernate.exception.DataException: could not execute statement
+16/01/2020 - 12:21:44 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 12:21:45 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 12:21:45 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 12:27:48 - grupo3.retoFinalBD.Principal - ERROR en la conexión a la base de datos: org.hibernate.exception.DataException: could not execute statement
+16/01/2020 - 12:28:07 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 12:28:08 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 12:28:08 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 12:47:32 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 12:47:32 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 12:47:32 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 12:48:58 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 12:48:59 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 12:48:59 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 12:49:12 - grupo3.retoFinalBD.Principal - ERROR en la conexión a la base de datos: org.hibernate.exception.DataException: could not execute statement
+16/01/2020 - 12:50:26 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 12:50:26 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 12:50:26 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 12:51:43 - grupo3.retoFinalBD.Principal - ERROR en la conexión a la base de datos: org.hibernate.exception.DataException: could not execute statement
+16/01/2020 - 12:53:07 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 12:53:08 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 12:53:08 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 12:53:26 - grupo3.retoFinalBD.Principal - Fichero JSON exportado.
+16/01/2020 - 12:53:34 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos1.json al servidor.
+16/01/2020 - 12:53:43 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos2.json al servidor.
+16/01/2020 - 12:53:51 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos3.json al servidor.
+16/01/2020 - 12:54:00 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos4.json al servidor.
+16/01/2020 - 12:54:10 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos5.json al servidor.
+16/01/2020 - 12:54:11 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\provincias.json al servidor.
+16/01/2020 - 12:54:11 - grupo3.retoFinalBD.Principal - Ficheros JSON subidos al servidor correctamente.
+16/01/2020 - 12:56:10 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 12:56:11 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 12:56:11 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 12:56:32 - grupo3.retoFinalBD.Principal - Fichero JSON exportado.
+16/01/2020 - 12:57:03 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos1.json al servidor.
+16/01/2020 - 12:57:23 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos2.json al servidor.
+16/01/2020 - 12:57:32 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos3.json al servidor.
+16/01/2020 - 12:57:42 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos4.json al servidor.
+16/01/2020 - 12:57:50 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos5.json al servidor.
+16/01/2020 - 12:57:50 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\provincias.json al servidor.
+16/01/2020 - 12:57:50 - grupo3.retoFinalBD.Principal - Ficheros JSON subidos al servidor correctamente.
+16/01/2020 - 01:00:24 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 01:00:25 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 01:00:25 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 01:00:37 - grupo3.retoFinalBD.Principal - Fichero JSON exportado.
+16/01/2020 - 01:00:46 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos1.json al servidor.
+16/01/2020 - 01:00:56 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos2.json al servidor.
+16/01/2020 - 01:01:04 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos3.json al servidor.
+16/01/2020 - 01:01:13 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos4.json al servidor.
+16/01/2020 - 01:01:24 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos5.json al servidor.
+16/01/2020 - 01:01:25 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\provincias.json al servidor.
+16/01/2020 - 01:01:25 - grupo3.retoFinalBD.Principal - Ficheros JSON subidos al servidor correctamente.
+16/01/2020 - 01:03:22 - grupo3.retoFinalBD.Principal - Conexión a la base de datos.
+16/01/2020 - 01:03:23 - grupo3.retoFinalBD.Principal - Fichero fuente alojamientos_rurales_euskadi.xml descargado.
+16/01/2020 - 01:03:23 - grupo3.retoFinalBD.Principal - Fichero fuente alojamientos_rurales_euskadi.xml actualizado.
+16/01/2020 - 01:03:23 - grupo3.retoFinalBD.Principal - Fichero fuente albergues_de_euskadi.xml descargado.
+16/01/2020 - 01:03:23 - grupo3.retoFinalBD.Principal - Fichero fuente albergues_de_euskadi.xml actualizado.
+16/01/2020 - 01:03:23 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml descargado.
+16/01/2020 - 01:03:23 - grupo3.retoFinalBD.Principal - Fichero fuente campings_de_euskadi.xml actualizado.
+16/01/2020 - 01:03:59 - grupo3.retoFinalBD.LectorXML - Alojamiento sin campo signatura.
+16/01/2020 - 01:05:59 - grupo3.retoFinalBD.LeerFicherosError al descargar el archivo 0000089641_a1_rec_turismo.zip
+16/01/2020 - 01:06:25 - grupo3.retoFinalBD.LectorJSON - Fichero alojamientos1.json creado.
+16/01/2020 - 01:06:25 - grupo3.retoFinalBD.LectorJSON - Fichero alojamientos2.json creado.
+16/01/2020 - 01:06:26 - grupo3.retoFinalBD.LectorJSON - Fichero alojamientos3.json creado.
+16/01/2020 - 01:06:27 - grupo3.retoFinalBD.LectorJSON - Fichero alojamientos4.json creado.
+16/01/2020 - 01:06:28 - grupo3.retoFinalBD.LectorJSON - Fichero alojamientos5.json creado.
+16/01/2020 - 01:06:28 - grupo3.retoFinalBD.Principal - Fichero JSON exportado.
+16/01/2020 - 01:06:39 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos1.json al servidor.
+16/01/2020 - 01:06:49 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos2.json al servidor.
+16/01/2020 - 01:06:57 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos3.json al servidor.
+16/01/2020 - 01:07:16 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos4.json al servidor.
+16/01/2020 - 01:07:34 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\alojamientos5.json al servidor.
+16/01/2020 - 01:07:35 - grupo3.retoFinalBD.Principal - ERROR al subir el fichero ficheros\provincias.json al servidor.
+16/01/2020 - 01:07:35 - grupo3.retoFinalBD.Principal - Ficheros JSON subidos al servidor correctamente.
