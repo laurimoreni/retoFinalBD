@@ -59,9 +59,9 @@ public class Principal {
 			fuentes = leer.leerFicheroFuentes("ficheros/ficheros_origen.txt");
 			if (fuentes.size() > 0) {
 				if (comprobarFicheros()) {
-					borrarTablaAlojamientos(session);
+					desactivarAlojamientos(session);
 					cargarAlojamientos(session);				
-					guardarAlojamientosBD();
+					actualizarAlojamientosBD();
 					exportarJSON();
 					if (subirArchivosServidor()) {
 						vista.textArea.append("Archivos JSON subidos al servidor correctamente.\n");
@@ -132,8 +132,8 @@ public class Principal {
 		}
 	}
 	
-	private void borrarTablaAlojamientos(Session session) {
-		String query = "DELETE from Alojamiento";
+	private void desactivarAlojamientos(Session session) {
+		String query = "UPDATE Alojamiento a SET a.activo = 0";
 		@SuppressWarnings("rawtypes")
 		Query q = session.createQuery(query);
 		q.executeUpdate();
@@ -151,13 +151,12 @@ public class Principal {
 		}
 	}
 	
-	private void guardarAlojamientosBD() {
+	private void actualizarAlojamientosBD() {
 		Session session2 = HibernateUtil.getSessionFactory().openSession();
 		session2.beginTransaction();
 		if (alojamientos.size() > 0) {
-			
 			for (Alojamiento alojamiento: alojamientos) {
-				session2.save(alojamiento);
+				session2.saveOrUpdate(alojamiento);
 			}
 		}
 		session2.getTransaction().commit();

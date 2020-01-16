@@ -1,6 +1,5 @@
 package grupo3.retoFinalBD;
 
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
