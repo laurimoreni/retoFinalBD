@@ -10,12 +10,13 @@ public class Usuario {
 	private String contrasena;
 	private String telefono;
 	private int administrador;
+	private String activo;
 	
 	public Usuario() {
 		
 	}
 	
-	public Usuario(String dni, String nombre, String apellidos, String email, String contrasena, String telefono, int administrador) {
+	public Usuario(String dni, String nombre, String apellidos, String email, String contrasena, String telefono, int administrador, String activo) {
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
@@ -23,6 +24,7 @@ public class Usuario {
 		this.contrasena = contrasena;
 		this.telefono = telefono;
 		this.administrador = administrador;
+		this.activo = activo;
 	}
 
 	public String getDni() {
@@ -52,6 +54,10 @@ public class Usuario {
 	public int getAdministrador() {
 		return administrador;
 	}
+	
+	public String getActivo() {
+		return activo;
+	}
 
 	public void setDni(String dni) {
 		this.dni = dni;
@@ -79,5 +85,9 @@ public class Usuario {
 	
 	public void setAdministrador(int administrador) {
 		this.administrador = administrador;
+	}
+	
+	public void setActivo(String activo) {
+		this.activo = activo;
 	}
 }

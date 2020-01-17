@@ -26,5 +26,8 @@
   <property access="field" generated="never" lazy="false" name="administrador" type="integer">
    <column name="administrador"/>
   </property>
+  <property access="field" generated="never" lazy="false" name="activo" type="java.lang.String">
+   <column name="activo"/>
+  </property>
  </class>
 </hibernate-mapping>
