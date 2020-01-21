@@ -8,9 +8,9 @@
     	<property name="hbm2ddl.auto">update</property>
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.connection.password">ladamijo</property>
-        <property name="hibernate.connection.url">jdbc:mysql://188.213.5.150:3306/prueba?serverTimezone=UTC</property>
+        <property name="hibernate.connection.url">jdbc:mysql://188.213.5.150:3306/alojamientos_fac?serverTimezone=UTC</property>
         <property name="hibernate.connection.username">ldmj</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</property>
         <!--  mapping data -->
         <mapping resource="Alojamiento.hbm.xml"/>
         <mapping resource="Provincia.hbm.xml"/>

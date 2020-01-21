@@ -9,8 +9,11 @@
    <generator class="assigned"/>
   </id>
   <many-to-one class="grupo3.retoFinalBD.Usuario" column="dni" name="usuario" foreign-key="USUARIO"/>
-  <property access="field" generated="never" lazy="false" name="fecha" type="java.sql.Date">
-   <column name="fecha"/>
+  <property access="field" generated="never" lazy="false" name="fechaEntrada" type="java.sql.Date">
+   <column name="fecha_entrada"/>
+  </property>
+  <property access="field" generated="never" lazy="false" name="fechaSalida" type="java.sql.Date">
+   <column name="fecha_salida"/>
   </property>
   <many-to-one class="grupo3.retoFinalBD.Alojamiento" column="alojamiento" name="alojamiento" foreign-key="ALOJAMIENTO"/>
   <property access="field" generated="never" lazy="false" name="personas" type="int">

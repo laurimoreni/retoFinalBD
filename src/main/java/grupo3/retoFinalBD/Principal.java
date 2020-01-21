@@ -61,7 +61,7 @@ public class Principal {
 				if (comprobarFicheros()) {
 					desactivarAlojamientos(session);
 					cargarAlojamientos(session);				
-					actualizarAlojamientosBD();
+					actualizarAlojamientosBD(session);
 					exportarJSON();
 					if (subirArchivosServidor()) {
 						vista.textArea.append("Archivos JSON subidos al servidor correctamente.\n");
@@ -151,15 +151,12 @@ public class Principal {
 		}
 	}
 	
-	private void actualizarAlojamientosBD() {
-		Session session2 = HibernateUtil.getSessionFactory().openSession();
-		session2.beginTransaction();
+	private void actualizarAlojamientosBD(Session session) {
 		if (alojamientos.size() > 0) {
 			for (Alojamiento alojamiento: alojamientos) {
-				session2.saveOrUpdate(alojamiento);
+				session.saveOrUpdate(alojamiento);
 			}
 		}
-		session2.getTransaction().commit();
 	}
 	
 	private void exportarJSON() {
