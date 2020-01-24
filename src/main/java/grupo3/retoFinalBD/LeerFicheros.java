@@ -14,9 +14,7 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -25,18 +23,15 @@ import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.io.FileUtils;
 
-
 public class LeerFicheros {
+	
 	private Logger logger;
-	private SimpleDateFormat dateFormat;
 	
 	public LeerFicheros() {
 		this.logger = Logger.getSingletonInstance();
-		this.dateFormat = new SimpleDateFormat("dd/MM/YYYY - hh:mm:ss");
 	}
 	
 	/**
-
 	 * Crea un array con las URLs necesarias y las guarda en ficheros.txt
 	 * @return
 	 */
@@ -52,15 +47,15 @@ public class LeerFicheros {
 					fuentes.add(new URL(linea));
 				}
 			} catch (FileNotFoundException fnfEx) {
-				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + "No se ha encontrado el archivo " + filename);
+				logger.escribirLog(LogginLevels.WARNING, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "No se ha encontrado el archivo " + filename);
 			} catch (IOException ioEx) {
-				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + "Operacion E/S fallida o interrunpida");
+				logger.escribirLog(LogginLevels.WARNING, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "Operacion E/S fallida o interrunpida");
 			} finally {
 				if (br != null) {
 					try {
 						br.close();
 					} catch (IOException e) {
-						e.printStackTrace();
+						logger.escribirLog(LogginLevels.WARNING, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "No se ha cerrado el archivo " + filename);
 					}
 				}
 			}
@@ -91,11 +86,11 @@ public class LeerFicheros {
 		    sc.init(null, trustAllCerts, new java.security.SecureRandom());
 		    HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 		} catch (Exception e) {
-			logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + "Error al iniciar los certificados HTTPS");
+			logger.escribirLog(LogginLevels.ERROR, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "Error al iniciar los certificados HTTPS");
 		}
 	}
 	
-	public void descargarFichero(URL fuente, String nombre) {
+	public void descargarFichero(URL fuente, String filename) {
 		File fichero = null;
 		FileOutputStream fos = null;
 		FileChannel fc = null;
@@ -103,7 +98,7 @@ public class LeerFicheros {
 		try {
 			// Comprobar que existe la carpeta temporal
 			Path ruta = Paths.get("ficheros/Temp");
-			fichero = new File(ruta.toString() + "/" + nombre);
+			fichero = new File(ruta.toString() + "/" + filename);
 			if (!Files.exists(ruta)) {	
 				fichero.getParentFile().mkdir();
 			}
@@ -112,50 +107,50 @@ public class LeerFicheros {
 			fc = fos.getChannel();
 			fc.transferFrom(rbc, 0, Long.MAX_VALUE);
 		} catch(Exception e) {
-			logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + "Error al descargar el archivo " + nombre);
+			logger.escribirLog(LogginLevels.ERROR, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "Error al descargar el archivo " + filename);
 		} finally {
 			if (fc != null) {
 				try {
 					fc.close();
 				} catch (IOException ex) {
-					ex.printStackTrace();
+					logger.escribirLog(LogginLevels.WARNING, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "No se ha cerrado el canal de lectura del archivo" + filename);
 				}
 			}
 			if (fos != null) {
 				try {
 					fos.close();
 				} catch (IOException ex) {
-					ex.printStackTrace();
+					logger.escribirLog(LogginLevels.WARNING, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "No se ha cerrado el stream del archivo " + filename);
 				}
 			}
 			if (rbc != null) {
 				try {
 					rbc.close();
 				} catch (IOException ex) {
-					ex.printStackTrace();
+					logger.escribirLog(LogginLevels.WARNING, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "No se ha cerrado canal de bytes el archivo " + filename);
 				}
 			}
 		}
 		fichero = null;
 	}
 	
-	public boolean checkFicheroActualizado(String nombre) {
-		File ficheroViejo = new File("ficheros/" + nombre);
-		File ficheroNuevo = new File("ficheros/Temp/" + nombre);
+	public boolean checkFicheroActualizado(String filename) {
+		File ficheroViejo = new File("ficheros/" + filename);
+		File ficheroNuevo = new File("ficheros/Temp/" + filename);
 		boolean actualizado = false;
 		if (ficheroViejo.isFile() && ficheroNuevo.isFile()) {
 			try {
 				actualizado = FileUtils.contentEquals(ficheroNuevo, ficheroViejo);
 			} catch (Exception ex) {
-				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + "Error al comprobar si el archivo " + nombre +  " esta actualizado");
+				logger.escribirLog(LogginLevels.ERROR, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "Error al comprobar si el archivo " + filename +  " esta actualizado");
 			}
 		}
 		return actualizado;
 	}
 	
-	public void actualizarFichero(String nombre) {
-		File ficheroViejo = FileUtils.getFile("ficheros/" + nombre);
-		File ficheroNuevo = FileUtils.getFile("ficheros/Temp/" + nombre);
+	public void actualizarFichero(String filename) {
+		File ficheroViejo = FileUtils.getFile("ficheros/" + filename);
+		File ficheroNuevo = FileUtils.getFile("ficheros/Temp/" + filename);
 		try {
 			if (ficheroViejo.exists()) {
 				FileUtils.forceDelete(ficheroViejo);
@@ -164,7 +159,7 @@ public class LeerFicheros {
 				FileUtils.copyFile(ficheroNuevo, ficheroViejo);
 			}
 		} catch (IOException e) {
-				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + "Error al actualizar el archivo " + nombre);
+			logger.escribirLog(LogginLevels.ERROR, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "Error al actualizar el archivo " + filename);
 		}
 	}
 

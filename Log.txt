@@ -1,0 +1,50 @@
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.Principal | procesoPpal | Conexión a la base de datos
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.Principal | comprobarFicheros | Fichero fuente alojamientos_rurales_euskadi.xml descargado
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.Principal | comprobarFicheros | Fichero fuente albergues_de_euskadi.xml descargado
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.Principal | comprobarFicheros | Fichero fuente campings_de_euskadi.xml descargado
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.Principal | comprobarFicheros | Fichero fuente campings_de_euskadi.xml actualizado
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.LectorXML | cargarAlojamientos | Alojamiento sin campo signatura
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.LeerFicheros | descargarFichero | Error al descargar el archivo 0000207534_a1_rec_turismo.zip
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.LeerFicheros | descargarFichero | Error al descargar el archivo 0000089641_a1_rec_turismo.zip
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.LectorJSON | exportarAlojamientos | Fichero alojamientos1.json creado
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.LectorJSON | exportarAlojamientos | Fichero alojamientos2.json creado
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.LectorJSON | exportarAlojamientos | Fichero alojamientos3.json creado
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.LectorJSON | exportarAlojamientos | Fichero alojamientos4.json creado
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.LectorJSON | exportarAlojamientos | Fichero alojamientos5.json creado
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.Principal | exportarJSON | Fichero JSON exportado
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.Principal | subirArchivosServidor | ERROR al subir el fichero ficheros\alojamientos1.json al servidor
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.Principal | subirArchivosServidor | ERROR al subir el fichero ficheros\alojamientos2.json al servidor
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.Principal | subirArchivosServidor | ERROR al subir el fichero ficheros\alojamientos3.json al servidor
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.Principal | subirArchivosServidor | ERROR al subir el fichero ficheros\alojamientos4.json al servidor
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.Principal | subirArchivosServidor | ERROR al subir el fichero ficheros\alojamientos5.json al servidor
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.Principal | subirArchivosServidor | ERROR al subir el fichero ficheros\provincias.json al servidor
+2020-01-24 | 11:36:26 | grupo3.retoFinalBD.Principal | procesoPpal | Ficheros JSON subidos al servidor correctamente
+2020-01-24 | 13:50:33 | INFO | grupo3.retoFinalBD.Principal | procesoPpal | Conexión a la base de datos
+2020-01-24 | 13:50:33 | INFO | grupo3.retoFinalBD.Principal | comprobarFicheros | Fichero fuente alojamientos_rurales_euskadi.xml descargado
+2020-01-24 | 13:50:33 | INFO | grupo3.retoFinalBD.Principal | comprobarFicheros | Fichero fuente albergues_de_euskadi.xml descargado
+2020-01-24 | 13:50:33 | INFO | grupo3.retoFinalBD.Principal | comprobarFicheros | Fichero fuente campings_de_euskadi.xml descargado
+2020-01-24 | 13:50:33 | INFO | grupo3.retoFinalBD.Principal | comprobarFicheros | Fichero fuente campings_de_euskadi.xml actualizado
+2020-01-24 | 13:50:33 | WARNING | grupo3.retoFinalBD.LectorXML | cargarAlojamientos | Alojamiento sin campo signatura
+2020-01-24 | 13:50:33 | ERROR | grupo3.retoFinalBD.LeerFicheros | descargarFichero | Error al descargar el archivo 0000207534_a1_rec_turismo.zip
+2020-01-24 | 13:50:33 | ERROR | grupo3.retoFinalBD.LeerFicheros | descargarFichero | Error al descargar el archivo 0000089641_a1_rec_turismo.zip
+2020-01-24 | 13:50:33 | INFO | grupo3.retoFinalBD.LectorJSON | exportarAlojamientos | Fichero alojamientos1.json creado
+2020-01-24 | 13:50:33 | INFO | grupo3.retoFinalBD.LectorJSON | exportarAlojamientos | Fichero alojamientos2.json creado
+2020-01-24 | 13:50:33 | INFO | grupo3.retoFinalBD.LectorJSON | exportarAlojamientos | Fichero alojamientos3.json creado
+2020-01-24 | 13:50:33 | INFO | grupo3.retoFinalBD.LectorJSON | exportarAlojamientos | Fichero alojamientos4.json creado
+2020-01-24 | 13:50:33 | INFO | grupo3.retoFinalBD.LectorJSON | exportarAlojamientos | Fichero alojamientos5.json creado
+2020-01-24 | 13:50:33 | INFO | grupo3.retoFinalBD.Principal | exportarJSON | Fichero JSON exportado
+2020-01-24 | 13:50:33 | ERROR | grupo3.retoFinalBD.Principal | subirArchivosServidor | ERROR al subir el fichero ficheros\alojamientos1.json al servidor
+2020-01-24 | 13:50:33 | ERROR | grupo3.retoFinalBD.Principal | subirArchivosServidor | ERROR al subir el fichero ficheros\alojamientos2.json al servidor
+2020-01-24 | 13:50:33 | ERROR | grupo3.retoFinalBD.Principal | subirArchivosServidor | ERROR al subir el fichero ficheros\alojamientos3.json al servidor
+2020-01-24 | 13:50:33 | ERROR | grupo3.retoFinalBD.Principal | subirArchivosServidor | ERROR al subir el fichero ficheros\alojamientos4.json al servidor
+2020-01-24 | 13:50:33 | ERROR | grupo3.retoFinalBD.Principal | subirArchivosServidor | ERROR al subir el fichero ficheros\alojamientos5.json al servidor
+2020-01-24 | 13:50:33 | ERROR | grupo3.retoFinalBD.Principal | subirArchivosServidor | ERROR al subir el fichero ficheros\provincias.json al servidor
+2020-01-24 | 13:50:33 | INFO | grupo3.retoFinalBD.Principal | procesoPpal | Ficheros JSON subidos al servidor correctamente
+2020-01-24 | 14:05:01 | INFO | grupo3.retoFinalBD.Principal | procesoPpal | Conexión a la base de datos
+2020-01-24 | 14:05:01 | INFO | grupo3.retoFinalBD.Principal | comprobarFicheros | Fichero fuente alojamientos_rurales_euskadi.xml descargado
+2020-01-24 | 14:05:01 | INFO | grupo3.retoFinalBD.Principal | comprobarFicheros | Fichero fuente albergues_de_euskadi.xml descargado
+2020-01-24 | 14:05:01 | INFO | grupo3.retoFinalBD.Principal | comprobarFicheros | Fichero fuente campings_de_euskadi.xml descargado
+2020-01-24 | 14:05:01 | INFO | grupo3.retoFinalBD.Principal | comprobarFicheros | Fichero fuente campings_de_euskadi.xml actualizado
+2020-01-24 | 14:05:01 | WARNING | grupo3.retoFinalBD.LectorXML | cargarAlojamientos | Alojamiento sin campo signatura
+2020-01-24 | 14:05:01 | ERROR | grupo3.retoFinalBD.LeerFicheros | descargarFichero | Error al descargar el archivo 0000207534_a1_rec_turismo.zip
+2020-01-24 | 14:05:01 | ERROR | grupo3.retoFinalBD.LectorXML | extraerImagenes | No se ha encontrado el archivo 0000207534_a1_rec_turismo.zip

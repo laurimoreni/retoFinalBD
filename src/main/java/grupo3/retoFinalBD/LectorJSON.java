@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -31,7 +30,7 @@ public class LectorJSON {
 			filename = "alojamientos" + count + ".json";
 			arrayToJson(aloj, filename);
 			ppal.vista.textArea.append("Fichero " + filename + " creado.\n");
-			ppal.logger.escribirLog(ppal.dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero " + filename + " creado.");
+			ppal.logger.escribirLog(LogginLevels.INFO, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "Fichero " + filename + " creado");
 			count++;
 			init = init + 100;
 			fin = fin + 100;
@@ -41,7 +40,7 @@ public class LectorJSON {
 				aloj = new ArrayList<Alojamiento>(alojamientos.subList(init, fin));
 				arrayToJson(aloj, filename);
 				ppal.vista.textArea.append("Fichero " + filename + " creado.\n");
-				ppal.logger.escribirLog(ppal.dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero " + filename + " creado.");
+				ppal.logger.escribirLog(LogginLevels.INFO, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "Fichero " + filename + " creado");
 			}
 		}
 	}
@@ -51,7 +50,6 @@ public class LectorJSON {
 	 * @param array
 	 */
 	public void arrayToJson(ArrayList<?> array, String filename) {
-		
 		if(!array.isEmpty()) {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			String ruta = "ficheros" + File.separator + filename;
@@ -63,9 +61,9 @@ public class LectorJSON {
 				gson.toJson(array, writer);
 				writer.close();
 			} catch (JsonIOException e) {
-				e.printStackTrace();
+				ppal.logger.escribirLog(LogginLevels.ERROR, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "No se ha podido escribir el archivo Json " + filename);
 			} catch (IOException e) {
-				e.printStackTrace();
+				ppal.logger.escribirLog(LogginLevels.ERROR, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "Operacion E/S fallida o interrunpida");
 			}
 		}
 	}

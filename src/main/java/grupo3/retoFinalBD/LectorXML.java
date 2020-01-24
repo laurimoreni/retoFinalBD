@@ -11,11 +11,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.Normalizer;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -36,17 +33,20 @@ import org.w3c.dom.NodeList;
 import org.apache.commons.codec.binary.Base64;
 
 public class LectorXML {
+	
+	private Logger logger;
+	private Formatos formato;
+	
+	public LectorXML() {
+		this.logger = Logger.getSingletonInstance();
+		this.formato = new Formatos();
+	}
 
-	public ArrayList<Alojamiento> cargarAlojamientos(File archivo, ArrayList<Alojamiento> alojamientos, ArrayList<Provincia> provincias, LeerFicheros leer, Session session){
-		Formatos formato = new Formatos();
-		Logger logger = Logger.getSingletonInstance();
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY - hh:mm:ss");
-		
+	public ArrayList<Alojamiento> cargarAlojamientos(File archivo, ArrayList<Alojamiento> alojamientos, ArrayList<Provincia> provincias, LeerFicheros leer, Session session){		
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document documento = builder.parse("ficheros/" + archivo);
-			
 			documento.getDocumentElement().normalize();
 			NodeList nodos = documento.getElementsByTagName("row");
 			for(int i = 0; i < nodos.getLength(); i++) {
@@ -161,16 +161,15 @@ public class LectorXML {
 							} catch(NullPointerException e) {
 								alojamiento.setImagen(imagenToBlob(ImageIO.read(new File("imagen.jpg"))));
 							} catch (Exception ex) {
-								ex.printStackTrace();
+								logger.escribirLog(LogginLevels.WARNING, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "No se ha podido descargar la imagen");
 							}
 							
 							alojamiento.setActivo(1);
 							alojamientos.add(alojamiento);
 						}
 					} catch (Exception e) {
-						logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Alojamiento sin campo signatura.");
+						logger.escribirLog(LogginLevels.WARNING, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "Alojamiento sin campo signatura");
 					}
-					
 				}
 			}
 		} catch(Exception e) {
@@ -198,20 +197,20 @@ public class LectorXML {
 		String directorioZip = "ficheros/Temp/";
 		ZipInputStream zis = null;
 		FileOutputStream fos = null;
+		ZipEntry salida;
 		boolean getImages = false;
 		int cont = 0;
 		
 		try {
 			//crea un buffer temporal para el archivo que se va descomprimir
 			zis = new ZipInputStream(new FileInputStream(directorioZip + fichero));
-	
-			ZipEntry salida;
 			//recorre todo el buffer extrayendo uno a uno cada archivo.zip y creándolos de nuevo en su archivo original 
 			while ((salida = zis.getNextEntry()) != null && !getImages) {
 				while (salida.getName().contains("/images/") && !getImages) {
 					salida = zis.getNextEntry();
 					String[] carpetas = salida.getName().split("/");
-					if (carpetas.length == 4) {													//estamos en un archivo dentro de la carpeta images
+					if (carpetas.length == 4) {													
+						//estamos en un archivo dentro de la carpeta images
 						fos = new FileOutputStream(directorioZip + carpetas[3]);
 						int leer;
 						byte[] buffer = new byte[1024];
@@ -222,7 +221,7 @@ public class LectorXML {
 							try {
 								fos.close();
 							} catch (IOException e) {
-								e.printStackTrace();
+								logger.escribirLog(LogginLevels.ERROR, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "No se ha podido cerrar el stream");
 							}
 						}
 						cont ++;
@@ -233,23 +232,22 @@ public class LectorXML {
 					}
 				}			
 			}
-			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			logger.escribirLog(LogginLevels.ERROR, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "No se ha encontrado el archivo " + fichero);
 		}catch(IOException e){
-			e.printStackTrace();
+			logger.escribirLog(LogginLevels.WARNING, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "Operacion E/S fallida o interrunpida");
 		} finally {
 			if (fos != null) {
 				try {
 					fos.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.escribirLog(LogginLevels.ERROR, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "No se ha podido cerrar el stream de archivos");
 				}
 			} if (zis != null) {
 				try {
 					zis.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.escribirLog(LogginLevels.ERROR, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "No se ha podido cerrar el stream de archivos zip");
 				}
 			}
 		}
@@ -259,9 +257,7 @@ public class LectorXML {
 		File imagen = null;
 		long tamano = 0;
 		long tamanoTemp = 0;
-		
 		File[] imagenes = new File("ficheros/Temp/").listFiles();
-		
 		for (File temp : imagenes) {
 			tamanoTemp  = FileUtils.sizeOf(temp);
 			if (tamanoTemp > tamano && FilenameUtils.getExtension(temp.getName()).equals("jpg")) {
@@ -269,19 +265,17 @@ public class LectorXML {
 				tamano = tamanoTemp;
 			}
 		}
-		
 		return imagen;
 	}
 	
 	public void borrarArchivos() {
 		File[] imagenes = new File("ficheros/Temp/").listFiles();
-		
 		for (File temp : imagenes) {
 			if (temp.exists()) {
 				try {
 					FileUtils.forceDelete(temp);
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.escribirLog(LogginLevels.ERROR, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "No se ha podido borrar el archivo " + temp.getName());
 				}
 			}
 		}
@@ -289,24 +283,20 @@ public class LectorXML {
 	
 	public Blob imagenToBlob(Image imagen) throws IOException{
 		Blob imagenBlob = null;
-		ByteArrayOutputStream baos=new ByteArrayOutputStream(1000);
-		BufferedImage img=(BufferedImage) imagen;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream(1000);
+		BufferedImage img = (BufferedImage) imagen;
 		ImageIO.write(img, "jpg", baos);
 		baos.flush();
- 
 		String base64String = Base64.encodeBase64String(baos.toByteArray());
 		baos.close();
-
 		byte[] imagenByte = Base64.decodeBase64(base64String);
-		
 		try {
-			imagenBlob = new SerialBlob ( imagenByte );
+			imagenBlob = new SerialBlob(imagenByte);
 		} catch (SerialException e) {
-			e.printStackTrace();
+			logger.escribirLog(LogginLevels.ERROR, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "No se ha podido serializar la imagen");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.escribirLog(LogginLevels.ERROR, getClass().getName(), new Object() {} .getClass().getEnclosingMethod().getName(), "Ha habido un error de SQL");
 		}
- 
 		return imagenBlob;
 	}
 }

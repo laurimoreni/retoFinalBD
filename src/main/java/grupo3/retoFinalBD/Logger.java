@@ -7,12 +7,15 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Logger {
 	private static Logger logger;
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY - hh:mm:ss");
+	private LocalDateTime fecha;
+	
+	private Logger() {
+		this.fecha = LocalDateTime.now().withNano(0);
+	}
 
 	public static Logger getSingletonInstance() {
 		if (logger == null) {
@@ -21,7 +24,7 @@ public class Logger {
 		return logger;
 	}
 
-	public void escribirLog(String mensaje) {
+	public void escribirLog(LogginLevels level, String clase, String metodo, String motivo) {
 		File f = null;
 		BufferedWriter writer = null;
 		PrintWriter printW = null;
@@ -33,7 +36,7 @@ public class Logger {
 			}
 			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f, true), StandardCharsets.UTF_8));
 			printW = new PrintWriter(writer);
-			printW.println(mensaje);
+			printW.println(fecha.toLocalDate() + " | " + fecha.toLocalTime() + " | " + level + " | " + clase + " | " + metodo + " | " + motivo);
 		} catch (IOException e1) {
 
 		} finally {
@@ -45,7 +48,7 @@ public class Logger {
 					printW.close();
 				}
 			} catch (Exception e2) {
-				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Error al cerrar fichero.");
+				logger.escribirLog(LogginLevels.ERROR, getClass().getName(), getClass().getEnclosingMethod().getName(), "Error al cerrar fichero");
 			}
 		}
 
