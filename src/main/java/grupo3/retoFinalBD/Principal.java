@@ -44,7 +44,9 @@ public class Principal {
 		
 		// iniciar sesion hibernate
 		vista.textArea.append("Conectando a la base de datos...\n");
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		Session session = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
 			vista.textArea.append("Conectado!\n");
 			logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Conexión a la base de datos.");
@@ -87,6 +89,10 @@ public class Principal {
 			vista.textArea.append("Error en la conexión a la Base de Datos\n");
 			logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - ERROR en la conexión a la base de datos: " + ex.getMessage());
 		} finally {
+			if (session == null ) {
+				vista.textArea.append("Error en la conexión a la Base de Datos\n");
+				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - ERROR en la conexión a la base de datos. ");
+			}
 			vista.btnOk.setEnabled(true);
 		}
 	}

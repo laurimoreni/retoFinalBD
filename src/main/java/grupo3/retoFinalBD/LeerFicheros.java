@@ -136,7 +136,6 @@ public class LeerFicheros {
 				}
 			}
 		}
-		fichero = null;
 	}
 	
 	public boolean checkFicheroActualizado(String nombre) {
