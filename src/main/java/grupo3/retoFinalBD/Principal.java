@@ -3,9 +3,7 @@ package grupo3.retoFinalBD;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -16,10 +14,9 @@ import org.hibernate.query.Query;
 import grupo3.retoFinalBD.vista.VentanaPpal;
 
 public class Principal {
-	
+
 	public VentanaPpal vista;
 	public Logger logger;
-	public SimpleDateFormat dateFormat;
 	private CargarProvincias cargarProvincias;
 	private LeerFicheros leer;
 	private ArrayList<Provincia> provincias;
@@ -27,11 +24,10 @@ public class Principal {
 	private ArrayList<URL> fuentes;
 	private LectorXML lectorXML;
 	private LectorJSON json;
-	
-	public Principal (VentanaPpal vista) {
+
+	public Principal(VentanaPpal vista) {
 		this.vista = vista;
 		this.logger = Logger.getSingletonInstance();
-		this.dateFormat = new SimpleDateFormat("dd/MM/YYYY - hh:mm:ss");
 		this.cargarProvincias = new CargarProvincias();
 		this.leer = new LeerFicheros();
 		this.lectorXML = new LectorXML();
@@ -39,9 +35,9 @@ public class Principal {
 		this.alojamientos = new ArrayList<Alojamiento>();
 		this.json = new LectorJSON(this);
 	}
-	
+
 	public void procesoPpal() {
-		
+
 		// iniciar sesion hibernate
 		vista.textArea.append("Conectando a la base de datos...\n");
 		Session session = null;
@@ -49,12 +45,11 @@ public class Principal {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
 			vista.textArea.append("Conectado!\n");
-			logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Conexión a la base de datos.");
-			
+			logger.escribirLog(LogginLevels.INFO, getClass().getName(), new Object() {}.getClass().getEnclosingMethod().getName(), "Conexión a la base de datos");
+
 			// cargar arraylist provincias
 			provincias = cargarProvincias.cargarProvincias(provincias);
 			guardarProvinciasBD(session);
-			
 
 			// Comprobar ficheros nuevos
 			vista.textArea.append("Leyendo fichero de fuentes...\n");
@@ -62,20 +57,20 @@ public class Principal {
 			if (fuentes.size() > 0) {
 				if (comprobarFicheros()) {
 					desactivarAlojamientos(session);
-					cargarAlojamientos(session);				
+					cargarAlojamientos(session);
 					actualizarAlojamientosBD(session);
 					exportarJSON();
 					if (subirArchivosServidor()) {
 						vista.textArea.append("Archivos JSON subidos al servidor correctamente.\n");
-						logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Ficheros JSON subidos al servidor correctamente.");
+						logger.escribirLog(LogginLevels.INFO, getClass().getName(), new Object() {}.getClass().getEnclosingMethod().getName(), "Ficheros JSON subidos al servidor correctamente");
 					} else {
 						vista.textArea.append("Error al subir los archivos JSON al servidor.\n");
 					}
-						
+
 				} else {
 					vista.textArea.append("No es necesario actualizar la base de datos.\n");
 				}
-				
+
 				// commit de los datos guardados
 				session.getTransaction().commit();
 			} else {
@@ -84,10 +79,10 @@ public class Principal {
 			vista.textArea.append("Proceso terminado.");
 			// cerrar sesion hibernate
 			HibernateUtil.shutdown();
-			
+
 		} catch (Exception ex) {
 			vista.textArea.append("Error en la conexión a la Base de Datos\n");
-			logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - ERROR en la conexión a la base de datos: " + ex.getMessage());
+			logger.escribirLog(LogginLevels.ERROR, getClass().getName(), new Object() {}.getClass().getEnclosingMethod().getName(), "ERROR en la conexión a la base de datos: " + ex.getMessage());
 		} finally {
 			if (session == null ) {
 				vista.textArea.append("Error en la conexión a la Base de Datos\n");
@@ -96,11 +91,11 @@ public class Principal {
 			vista.btnOk.setEnabled(true);
 		}
 	}
-	
+
 	private boolean comprobarFicheros() {
 		boolean actualizar = false;
 		int cont = 1;
-		for (URL fuente: fuentes) {
+		for (URL fuente : fuentes) {
 			String[] datos = fuente.toString().split("/");
 			String nombreFichero = datos[5] + ".xml";
 			leer.certificadosHTTPS();
@@ -108,12 +103,12 @@ public class Principal {
 			leer.descargarFichero(fuente, nombreFichero);
 			vista.textArea.append("Fichero fuente " + cont + " descargado.\n");
 			vista.textArea.append("Comprobando fichero fuente " + cont + "...\n");
-			logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero fuente " + nombreFichero + " descargado.");
+			logger.escribirLog(LogginLevels.INFO, getClass().getName(), new Object() {}.getClass().getEnclosingMethod().getName(), "Fichero fuente " + nombreFichero + " descargado");
 			if (!leer.checkFicheroActualizado(nombreFichero)) {
 				vista.textArea.append("Fichero fuente " + cont + " nuevo.\n");
 				vista.textArea.append("Actualizando datos de fichero fuente " + cont + "...\n");
 				leer.actualizarFichero(nombreFichero);
-				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero fuente " + nombreFichero + " actualizado.");
+				logger.escribirLog(LogginLevels.INFO, getClass().getName(), new Object() {}.getClass().getEnclosingMethod().getName(), "Fichero fuente " + nombreFichero + " actualizado");
 				actualizar = true;
 			} else {
 				vista.textArea.append("No es necesario actualizar el fichero fuente " + cont + ".\n");
@@ -121,33 +116,33 @@ public class Principal {
 			try {
 				FileUtils.forceDelete(new File("ficheros/Temp/" + nombreFichero));
 			} catch (IOException ex) {
-				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - ERROR fichero temporal " + nombreFichero + "no se pudo borrar.");
+				logger.escribirLog(LogginLevels.ERROR, getClass().getName(), new Object() {}.getClass().getEnclosingMethod().getName(), "ERROR fichero temporal " + nombreFichero + "no se pudo borrar");
 			}
-			cont ++;
+			cont++;
 		}
 		return actualizar;
 	}
-	
+
 	private void guardarProvinciasBD(Session session) {
 		@SuppressWarnings("unchecked")
 		List<Provincia> provinciasBD = (List<Provincia>) session.createQuery("from Provincia").list();
 		if (provinciasBD.size() == 0) {
-			for(Provincia provincia: provincias) {
+			for (Provincia provincia : provincias) {
 				session.save(provincia);
 			}
 		}
 	}
-	
+
 	private void desactivarAlojamientos(Session session) {
 		String query = "UPDATE Alojamiento a SET a.activo = 0";
 		@SuppressWarnings("rawtypes")
 		Query q = session.createQuery(query);
 		q.executeUpdate();
 	}
-	
+
 	private void cargarAlojamientos(Session session) {
 		int cont = 1;
-		for (URL fuente: fuentes) {
+		for (URL fuente : fuentes) {
 			String[] datos = fuente.toString().split("/");
 			String nombreFichero = datos[5] + ".xml";
 			File ficheroXML = new File(nombreFichero);
@@ -156,38 +151,38 @@ public class Principal {
 			cont++;
 		}
 	}
-	
+
 	private void actualizarAlojamientosBD(Session session) {
 		if (alojamientos.size() > 0) {
-			for (Alojamiento alojamiento: alojamientos) {
+			for (Alojamiento alojamiento : alojamientos) {
 				session.saveOrUpdate(alojamiento);
 			}
 		}
 	}
-	
+
 	private void exportarJSON() {
 		vista.textArea.append("Exportando JSON...\n");
 		json.exportarAlojamientos(alojamientos);
 		json.arrayToJson(provincias, "provincias.json");
 		vista.textArea.append("JSON exportado.\n");
-		logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - Fichero JSON exportado.");
+		logger.escribirLog(LogginLevels.INFO, getClass().getName(), new Object() {}.getClass().getEnclosingMethod().getName(), "Fichero JSON exportado");
 	}
-	
+
 	private boolean subirArchivosServidor() {
 		FTPConnection ftp = new FTPConnection();
 		boolean archivosSubidos = true;
-		
+
 		vista.textArea.append("Subiendo archivos JSON al servidor...\n");
 		File[] ficherosJSON = new File("ficheros/").listFiles();
-		
+
 		for (File fich : ficherosJSON) {
 			if (FilenameUtils.getExtension(fich.getName()).equals("json")) {
 				if (!ftp.subirArchivo(fich))
 					archivosSubidos = false;
-					logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - ERROR al subir el fichero " + fich + " al servidor.");
+				logger.escribirLog(LogginLevels.ERROR, getClass().getName(), new Object() {}.getClass().getEnclosingMethod().getName(), "ERROR al subir el fichero " + fich + " al servidor");
 			}
 		}
-		
+
 		return archivosSubidos;
 	}
 
