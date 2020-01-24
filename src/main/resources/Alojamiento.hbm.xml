@@ -33,7 +33,7 @@
         <property name="municipality" type="java.lang.String" access="field">
             <column name="municipality" />
         </property>
-        <many-to-one name="provincia" column="territory" class="Provincia" foreign-key="PROVINCIA" cascade="all"></many-to-one>
+        <many-to-one name="provincia" column="territory" class="Provincia" foreign-key="PROVINCIA" cascade="merge"></many-to-one>
         <property name="latwgs84" type="float" access="field">
             <column name="latwgs84" />
         </property>
