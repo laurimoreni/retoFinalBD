@@ -86,7 +86,7 @@ public class Principal {
 		} finally {
 			if (session == null ) {
 				vista.textArea.append("Error en la conexión a la Base de Datos\n");
-				logger.escribirLog(dateFormat.format(new Date()) + " - " + getClass().getName() + " - ERROR en la conexión a la base de datos. ");
+				logger.escribirLog(LogginLevels.ERROR, getClass().getName(), new Object() {}.getClass().getEnclosingMethod().getName(), " - ERROR en la conexión a la base de datos. ");
 			}
 			vista.btnOk.setEnabled(true);
 		}
