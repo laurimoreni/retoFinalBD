@@ -100,7 +100,7 @@ public class LeerFicheros {
 			Path ruta = Paths.get("ficheros/Temp");
 			fichero = new File(ruta.toString() + "/" + filename);
 			if (!Files.exists(ruta)) {	
-				fichero.getParentFile().mkdir();
+				fichero.getParentFile().mkdirs();
 			}
 			rbc = Channels.newChannel(fuente.openStream());
 			fos = new FileOutputStream(fichero.getPath());
